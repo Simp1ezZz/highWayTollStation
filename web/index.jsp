@@ -16,22 +16,27 @@
 <div region="north" id="header">
     <img src="img/logo.png" class="logo" />
     <div class="top-btns">
-        <span>欢迎您，管理员</span>
-        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-lock'">注销登录</a>
-        <div id="w" class="easyui-window" title="请先登录！" collapsible="false"
+        <%if (session.getAttribute("user")!=null){%>
+        <span>欢迎您，<%=session.getAttribute("user")%></span>
+        <a href="logout.jsp" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-lock'" onclick="">注销登录</a>
+        <%}%>
+        <% if (session.getAttribute("user")==null){
+        %>
+        <%--login--%>
+        <div id="wLogin" class="easyui-window" title="请先登录！" collapsible="false"
              minimizable="false" maximizable="false" icon="icon-save"
-             style="width: 400px; height: 285px; padding: 30px; background: #fafafa;"
+             style="width: 400px; height: 290px; padding: 30px; background: #fafafa;"
              data-options="closable:false,draggable:false" modal="true">
             <form id="formlogin" method="post" action="LoginServlet">
                 <!-- menulogin -->
                 <div style="margin-bottom: 20px">
-                    用户名：<input class="easyui-textbox" id="loginname" name="usercode"
-                           prompt="usercode" iconWidth="28"
+                    用户名：<input class="easyui-textbox" id="loginname" name="userName"
+                           prompt="userName" iconWidth="28"
                            style="width: 300px; height: 34px; padding: 10px;">
                 </div>
                 <div style="margin-bottom: 20px">
-                    密&nbsp;&nbsp;&nbsp;码：<input class="easyui-passwordbox" id="password" name="password"
-                           prompt="password" iconWidth="28"
+                    密&nbsp;&nbsp;&nbsp;码：<input class="easyui-passwordbox" id="passWord" name="passWord"
+                           prompt="passWord" iconWidth="28"
                            style="width: 300px; height: 34px; padding: 10px">
                 </div>
             </form>
@@ -39,15 +44,45 @@
                 <a href="javascript:void(0)" id="login-submit-btn"
                    class="easyui-linkbutton" style="width: 80px">登录</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton"
-                   onclick="clearForm()" style="width: 80px">取消</a>
+                   onclick="register()" style="width: 110px">注册新账号</a>
             </div>
         </div>
-        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
-        <select class="easyui-combobox" data-options="editable:false">
-            <option value="0" selected="selected">中文</option>
-            <option value="1">English</option>
-        </select>
-
+        <%}%>
+        <%--register--%>
+        <div id="wRegister" class="easyui-window" title="管理员注册" collapsible="false"
+             minimizable="false" maximizable="false" icon="icon-save"
+             style="width: 400px; height: 400px; padding: 30px; background: #fafafa;"
+             data-options="closable:false,draggable:false,windows:close" modal="true" closed="true">
+            <form id="formRegister" method="post" action="RegisterServlet">
+                <!-- menuRegister -->
+                <div style="margin-bottom: 20px">
+                    用户名：<input class="easyui-textbox" id="registerName" name="userName"
+                               prompt="userName" iconWidth="28"
+                               style="width: 300px; height: 34px; padding: 10px;">
+                </div>
+                <div style="margin-bottom: 20px">
+                    工号：<input class="easyui-textboxbox" id="tollCollecterNo" name="tollCollecterNo"
+                              prompt="tollCollecterNo" iconWidth="28"
+                              style="width: 300px; height: 34px; padding: 10px">
+                </div>
+                <div style="margin-bottom: 20px">
+                    密码：<input class="easyui-passwordbox" id="registerPassWord1" name="passWord1"
+                              prompt="password" iconWidth="28"
+                              style="width: 300px; height: 34px; padding: 10px">
+                </div>
+                <div style="margin-bottom: 20px">
+                    确认密码：<input class="easyui-passwordbox" id="registerPassWord2" name="passWord2"
+                                prompt="Confirm Password" iconWidth="28"
+                                style="width: 300px; height: 34px; padding: 10px">
+                </div>
+            </form>
+            <div style="text-align: center; padding: 5px 0">
+                <a href="javascript:void(0)" id="register-submit-btn"
+                   class="easyui-linkbutton" style="width: 80px">注册</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton"
+                   onclick="toLogin()" style="width: 140px">已有账号，去登陆</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -103,8 +138,7 @@
     </div>
 </div>
 
-<div region="south" id="footer">某某后台管理系统 V1.0</div>
-
+<div region="south" id="footer">高速收费管理系统 V0.1</div>
 <script type="text/javascript">
     $(function() {
         //添加新的Tab页
@@ -133,9 +167,9 @@
     });
 </script>
 <script>
+    //Login
     $(function() {
         if("${msg }"!=""){
-            //$.messager.alert('提示',"${msg }");
             var showmsg="${msg }";
             $.messager.show({
                 title:'提示',
@@ -160,7 +194,7 @@
                     $.messager.alert('用户名或密码错误',msg,'info');
                     return false;
                 }
-                $("#formlogin").submit();
+               $("#formlogin").submit();
             }
         });
         /** 按了回车键 */
@@ -170,12 +204,51 @@
             }
         })
     })
-    function clearForm() {
-        $('#formlogin').form('clear');
+    function register() {
+        $('#wLogin').window("close");
+        $('#wRegister').window("open");
+    };
+
+    //register
+    $(function() {
+        /*获取焦点*/
+        $('#registerName').textbox('textbox').focus();
+        /** 给登录按钮绑定点击事件  */
+        $("#register-submit-btn").on("click", function() {
+            /** 校验登录参数 ctrl+K */
+            var registerName = $("#registerName").val();
+            var tollCollecterNo = $("#tollCollecterNo").val()
+            var registerPassWord1 = $("#registerPassWord1").val();
+            var registerPassWord2 = $("#registerPassWord2").val();
+            if($("#formRegister").form('validate')){
+                var msg = "";
+                if (!/^\w{1,20}$/.test(registerName)) {
+                    msg = "登录名长度必须是1~20之间";
+                } else if (!/^\w{1,20}$/.test(registerPassWord1)) {
+                    msg = "密码长度必须是1~20之间";
+                } else if (registerPassWord1!=registerPassWord2){
+                    msg = "两次密码不一致！";
+                } else if(!/^\w{1,6}$/.test(tollCollecterNo)){
+                    msg = "工号为1-6位数";
+                }
+                if (msg != "") {
+                    $.messager.alert('输入错误！',msg,'info');
+                    return false;
+                }
+                $("#formRegister").submit();
+            }
+        });
+        /** 按了回车键 */
+        $(document).keydown(function(event) {
+            if (event.keyCode == 13) {
+                $("#register-submit-btn").trigger("click");
+            }
+        })
+    })
+    function toLogin() {
+        $('#wRegister').window("close")
+        $('#wLogin').window("open");
     }
-    $('#easyui-textbox').textbox({
-        label: '用户名：'
-    });
 </script>
 </body>
 </html>

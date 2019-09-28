@@ -1,0 +1,122 @@
+package dao;
+
+import bean.AdminInfo;
+import utils.DatabaseConn;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class adminDao {
+    private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
+    private DatabaseConn dbConn;
+
+    public adminDao() {
+
+    }
+    //用户注册
+    public AdminInfo userLogin(String userName, String passWord) {
+        AdminInfo User = null;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "select userName,passWord from admin where userName=? and passWord=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            pstmt.setString(2, passWord);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                User = new AdminInfo();
+                User.setUserName(rs.getString("userName"));
+                User.setPassWord(rs.getString("passWord"));
+                System.out.println(User.getUserName());
+            }
+            if (rs != null)
+                rs.close();
+            if (pstmt != null)
+                pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                DatabaseConn.closeConn(conn);
+        }
+        return User;
+    }
+    //用户是否存在
+    public boolean getUser(String userName) {
+        boolean flag = false;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "select userName from admin where userName=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            rs = pstmt.executeQuery();
+            if (rs.next())
+                flag = true;
+            if (rs != null)
+                rs.close();
+            if (pstmt != null)
+                pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                DatabaseConn.closeConn(conn);
+        }
+        return flag;
+    }
+    //收费员是否在系统
+    public boolean getTollCollecterNo(int tollCollecterNo) {
+        boolean flag = false;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "select tollCollecterNo from tollcollecterinfo where tollCollecterNo=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, tollCollecterNo);
+            rs = pstmt.executeQuery();
+            if (rs.next())
+                flag = true;
+            if (rs != null)
+                rs.close();
+            if (pstmt != null)
+                pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                DatabaseConn.closeConn(conn);
+        }
+        return flag;
+    }
+    //管理员表中添加
+    public boolean insertAdmin(AdminInfo newAdmin) {
+        boolean flag = false;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "insert into Admin(tollCollecterNo,userName,passWord) values(?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, newAdmin.getTollCollecterNo());
+            pstmt.setString(2, newAdmin.getUserName());
+            pstmt.setString(3, newAdmin.getPassWord());
+            int i = pstmt.executeUpdate();
+            if (i > 0) {
+                flag = true;
+                System.out.println("成功添加");
+            }
+            if (pstmt != null)
+                pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                DatabaseConn.closeConn(conn);
+        }
+        return flag;
+    }
+}
