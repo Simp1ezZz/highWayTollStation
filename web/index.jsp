@@ -14,7 +14,7 @@
 <body class="easyui-layout" id="layout" style="visibility:hidden;">
 
 <div region="north" id="header">
-    <img src="img/logo.png" class="logo" />
+    <img src="img/logo1.png" class="logo" />
     <div class="top-btns">
         <%if (session.getAttribute("user")!=null){%>
         <span>欢迎您，<%=session.getAttribute("user")%></span>
@@ -88,19 +88,34 @@
 
 <div region="west" split="true" title="导航菜单" id="naver">
     <div class="easyui-accordion" fit="true" id="navmenu">
-        <div title="指标体系">
+        <div title="车道收费">
             <ul class="navmenu">
-                <li class="active"><a href="#">首页</a></li>
-                <li><a href="#" data-url="html/page01.html">组织机构管理</a></li>
-                <li><a href="#" data-url="html/page02.html">指标库列表</a></li>
-            </ul>s
+                <li><a href="#" data-url="jsp/shangxiaban.jsp">上下班</a></li>
+                <li><a href="#" data-url="jsp/page01.html">车辆进站</a></li>
+                <li><a href="#" data-url="html/page02.html">收费出站</a></li>
+            </ul>
         </div>
-        <div title="绩效考核"></div>
-        <div title="报表管理"></div>
-        <div title="系统管理"></div>
-        <div title="组件示例">
+        <div title="收费站管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="html/demo01.html">锁定行和列</a></li>
+                <li><a href="#" data-url="html/page01.html">查询班次</a></li>
+                <li><a href="#" data-url="html/page01.html">安排班次</a></li>
+                <li><a href="#" data-url="html/page02.html">收费员信息</a></li>
+                <li><a href="#" data-url="html/page02.html">车道信息</a></li>
+            </ul>
+        </div>
+        <div title="行车卡管理">
+            <ul class="navmenu">
+                <li><a href="#" data-url="html/page01.html">办理行车卡</a></li>
+                <li><a href="#" data-url="html/page01.html">注销行车卡</a></li>
+                <li><a href="#" data-url="html/page02.html">行车卡充值</a></li>
+                <li><a href="#" data-url="html/page02.html">查询卡信息</a></li>
+            </ul>
+        </div>
+        <div title="结算中心">
+            <ul class="navmenu">
+                <li><a href="#" data-url="html/page01.html">查看费率</a></li>
+                <li><a href="#" data-url="html/page01.html">修改费率</a></li>
+                <li><a href="#" data-url="html/page02.html">拆分账目</a></li>
             </ul>
         </div>
     </div>
@@ -127,8 +142,8 @@
                 <div title="系统公告">
                     <ul class="notice-list">
                         <li>
-                            <span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-                            <span class="date">2015-10-30</span>
+                            <span>黄金周出行高峰，各收费员辛苦了！</span>
+                            <span class="date">2019-9-28</span>
                         </li>
                     </ul>
                 </div>
@@ -197,12 +212,6 @@
                $("#formlogin").submit();
             }
         });
-        /** 按了回车键 */
-        $(document).keydown(function(event) {
-            if (event.keyCode == 13) {
-                $("#login-submit-btn").trigger("click");
-            }
-        })
     })
     function register() {
         $('#wLogin').window("close");
@@ -238,12 +247,6 @@
                 $("#formRegister").submit();
             }
         });
-        /** 按了回车键 */
-        $(document).keydown(function(event) {
-            if (event.keyCode == 13) {
-                $("#register-submit-btn").trigger("click");
-            }
-        })
     })
     function toLogin() {
         $('#wRegister').window("close")
