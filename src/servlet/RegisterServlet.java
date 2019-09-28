@@ -1,7 +1,7 @@
 package servlet;
 
 import bean.AdminInfo;
-import dao.adminDao;
+import dao.AdminDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,20 +14,20 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int tollCollecterNo = Integer.parseInt(request.getParameter("tollCollecterNo"));
+        String tollCollectorNo = request.getParameter("tollCollectorNo");
         String userName = request.getParameter("userName");
         String passWord = request.getParameter("passWord1");
         AdminInfo admin = new AdminInfo();
-        adminDao adminD = new adminDao();
+        AdminDao adminD = new AdminDao();
         String msg=null;
         if(adminD.getUser(userName))
         {
             msg = "用户名已存在，请直接登陆!";
-        }else if(!adminD.getTollCollecterNo(tollCollecterNo))
+        }else if(adminD.getTollCollectorNo(tollCollectorNo))
         {
             msg = "工号错误，请检查后再试！";
         }else {
-            admin.setTollCollecterNo(tollCollecterNo);
+            admin.setTollCollectorNo(tollCollectorNo);
             admin.setUserName(userName);
             admin.setPassWord(passWord);
             if(adminD.insertAdmin(admin)) {

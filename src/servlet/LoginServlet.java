@@ -1,10 +1,11 @@
 package servlet;
 
 import bean.AdminInfo;
-import dao.adminDao;
+import dao.AdminDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +17,15 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("userName");
         String passWord = request.getParameter("passWord");
-        adminDao adminD = new adminDao();
+        AdminDao adminD = new AdminDao();
         AdminInfo admin = adminD.userLogin(userName,passWord);
         if(admin!=null)
         {
+            Cookie cookie = new Cookie("tollCollectorNo",admin.getTollCollectorNo());
+            response.addCookie(cookie);
+            System.out.println(admin.getTollCollectorNo());
+            System.out.println(cookie.getValue());
+            System.out.println("----");
             request.getSession().setAttribute("user",admin.getUserName());
             response.sendRedirect("index.jsp");
         }else

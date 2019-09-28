@@ -6,14 +6,14 @@ public class AdminInfo {
     }
     private String userName;
     private String passWord;
-    private int tollCollecterNo;
+    private String tollCollectorNo;
 
-    public int getTollCollecterNo() {
-        return tollCollecterNo;
+    public String getTollCollectorNo() {
+        return tollCollectorNo;
     }
 
-    public void setTollCollecterNo(int tollCollecterNo) {
-        this.tollCollecterNo = tollCollecterNo;
+    public void setTollCollectorNo(String tollCollectorNo) {
+        this.tollCollectorNo = tollCollectorNo;
     }
 
     public String getUserName() {

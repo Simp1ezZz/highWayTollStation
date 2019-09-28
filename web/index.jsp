@@ -61,8 +61,8 @@
                                style="width: 300px; height: 34px; padding: 10px;">
                 </div>
                 <div style="margin-bottom: 20px">
-                    工号：<input class="easyui-textboxbox" id="tollCollecterNo" name="tollCollecterNo"
-                              prompt="tollCollecterNo" iconWidth="28"
+                    工号：<input class="easyui-textboxbox" id="tollCollectorNo" name="tollCollectorNo"
+                              prompt="tollCollectorNo" iconWidth="28"
                               style="width: 300px; height: 34px; padding: 10px">
                 </div>
                 <div style="margin-bottom: 20px">
@@ -226,7 +226,7 @@
         $("#register-submit-btn").on("click", function() {
             /** 校验登录参数 ctrl+K */
             var registerName = $("#registerName").val();
-            var tollCollecterNo = $("#tollCollecterNo").val()
+            var tollCollectorNo = $("#tollCollectorNo").val()
             var registerPassWord1 = $("#registerPassWord1").val();
             var registerPassWord2 = $("#registerPassWord2").val();
             if($("#formRegister").form('validate')){
@@ -237,7 +237,7 @@
                     msg = "密码长度必须是1~20之间";
                 } else if (registerPassWord1!=registerPassWord2){
                     msg = "两次密码不一致！";
-                } else if(!/^\w{1,6}$/.test(tollCollecterNo)){
+                } else if(!/^\w{1,6}$/.test(tollCollectorNo)){
                     msg = "工号为1-6位数";
                 }
                 if (msg != "") {

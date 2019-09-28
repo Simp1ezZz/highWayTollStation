@@ -3,13 +3,13 @@ package bean;
 import java.util.Date;
 
 //收费员信息
-public class TollCollecterInfo {
-    public TollCollecterInfo() {
+public class TollCollectorInfo {
+    public TollCollectorInfo() {
 
     }
 
-    private int tollCollecterNo;		//收费员编号
-    private int tollBoothNo;			//所属收费站编号
+    private String tollCollectorNo;		//收费员编号
+    private String tollBoothNo;			//所属收费站编号
     private String name;				//姓名
     private String sex;					//性别
     private String department;			//部门
@@ -19,19 +19,19 @@ public class TollCollecterInfo {
     private String email;               //邮箱
     private String homeAddress;         //家庭住址
 
-    public int getTollCollecterNo() {
-        return tollCollecterNo;
+    public String getTollCollectorNo() {
+        return tollCollectorNo;
     }
 
-    public void setTollCollecterNo(int tollCollecterNo) {
-        this.tollCollecterNo = tollCollecterNo;
+    public void setTollCollectorNo(String tollCollectorNo) {
+        this.tollCollectorNo = tollCollectorNo;
     }
 
-    public int getTollBoothNo() {
+    public String getTollBoothNo() {
         return tollBoothNo;
     }
 
-    public void setTollBoothNo(int tollBoothNo) {
+    public void setTollBoothNo(String tollBoothNo) {
         this.tollBoothNo = tollBoothNo;
     }
 
