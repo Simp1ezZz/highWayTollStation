@@ -27,18 +27,17 @@ public class StartWorkServlet extends HttpServlet {
             if("tollCollectorNo".equals(cookie.getName()))
                 tollCollectorNo = cookie.getValue();
         }
+        WorkLogDao logD = new WorkLogDao();
         TollCollectorInfo tollCollector = new TollCollectorInfo();
         TollCollectorDao tollCollectorD = new TollCollectorDao();
-        tollCollectorD.getTollCollector(tollCollectorNo,tollCollector);
+        tollCollector=tollCollectorD.getTollCollector(tollCollectorNo);
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         WorkLog log = new WorkLog();
         log.setTollCollectorNo(tollCollector.getTollCollectorNo());
         log.setTollBooshNo(tollCollector.getTollBoothNo());
         log.setStartWorkTime(df.format(day));
-        WorkLogDao logD = new WorkLogDao();
         logD.startWork(log);
-        request.getRequestDispatcher("index.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

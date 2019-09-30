@@ -9,7 +9,7 @@
         <!-- 数据表 -->
         <table id="dg" class="easyui-datagrid" title="出勤状况" fit="true"
                data-options="fitColumns:true,url:'WorkLogPrintServlet',rownumbers:true,
-               autoRowHeight:false,pagination:true" toolbar="#toolbar2" striped="true" remoteSort="false" nowrap="false">
+               pagination:true" toolbar="#toolbar2" striped="true" remoteSort="false" nowrap="false">
             <thead>
             <tr>
                 <th field="tollCollectorNo" width="240px" align="center" sortable="true">收费员编号</th>
@@ -23,14 +23,44 @@
 </div>
 <script>
     function startWorkSubmit() {
+        var data = $('#dg').datagrid('getData');
+
+        var user = <%=session.getAttribute("user")%>;
+        for(var i=1;i<data.total;i++){
+            if(user=data.rows[i].tollCollectorNo && data.rows[i].finishWorkTime==null) {
+                $.messager.alert('请勿重复点击打卡！', '确保你之前的下班打卡已经完成！');
+                return;
+            }
+        }
         $.ajax({
             url: "StartWorkServlet",
             type:"POST"
-        })
+        });
         setTimeout(function yanchi(){$("#dg").datagrid("reload")},200);
+
     }
+
     function finishWorkSubmit() {
-        $("#").submit();
+        var data = $('#dg').datagrid('getData');
+
+        var user = <%=session.getAttribute("user")%>;
+        for(var i=1;i<data.total;i++){
+            if(user=data.rows[i].tollCollectorNo && data.rows[i].finishWorkTime==null) {
+                $.ajax({
+                    url: "FinishWorkServlet",
+                    type: "POST",
+                    data:{
+                        startWorkTime:data.rows[i].startWorkTime
+                    }
+                });
+                setTimeout(function yanchi() {
+                    $("#dg").datagrid("reload")
+                }, 200);
+                return;
+            }
+        }
+        $.messager.alert('请勿重复点击打卡！', '确保你之前已经上班打卡！');
     }
+
 </script>
 

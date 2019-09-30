@@ -27,18 +27,25 @@ public class FinishWorkServlet extends HttpServlet {
             if("tollCollectorNo".equals(cookie.getName()))
                 tollCollectorNo = cookie.getValue();
         }
-        TollCollectorInfo tollCollector = new TollCollectorInfo();
+        //获取ajax传来的startWorkTime
+        String startWorkTime=request.getParameter("startWorkTime");
+        TollCollectorInfo tollCollector;
         TollCollectorDao tollCollectorD = new TollCollectorDao();
-        tollCollectorD.getTollCollector(tollCollectorNo,tollCollector);
+        tollCollector = tollCollectorD.getTollCollector(tollCollectorNo);
+        //当前系统时间
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         WorkLog log = new WorkLog();
         log.setTollCollectorNo(tollCollector.getTollCollectorNo());
         log.setTollBooshNo(tollCollector.getTollBoothNo());
-        log.setStartWorkTime(df.format(day));
+        log.setStartWorkTime(startWorkTime);
+        log.setFinishWorkTime(df.format(day));
         WorkLogDao logD = new WorkLogDao();
-        logD.startWork(log);
-        request.getRequestDispatcher("index.jsp").forward(request,response);
+        System.out.println(log.getTollCollectorNo());
+        System.out.println(log.getTollBooshNo());
+        System.out.println(log.getStartWorkTime());
+        System.out.println(log.getFinishWorkTime());
+        logD.finishWork(log);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

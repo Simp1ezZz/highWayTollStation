@@ -42,8 +42,8 @@ public class TollCollectorDao {
     }
 
     //查询收费员信息
-    public boolean getTollCollector(String tollCollectorNo, TollCollectorInfo collector) {
-        boolean flag = false;
+    public TollCollectorInfo getTollCollector(String tollCollectorNo) {
+        TollCollectorInfo collector = new TollCollectorInfo();
         dbConn = new DatabaseConn();
         try {
             conn = dbConn.getConnection();
@@ -52,7 +52,6 @@ public class TollCollectorDao {
             pstmt.setString(1, tollCollectorNo);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                flag = true;
                 collector.setTollCollectorNo(rs.getString("tollCollectorNo"));
                 collector.setTollBoothNo(rs.getString("tollBoothNo"));
                 collector.setName(rs.getString("name"));
@@ -74,6 +73,6 @@ public class TollCollectorDao {
             if (conn != null)
                 DatabaseConn.closeConn(conn);
         }
-        return flag;
+        return collector;
     }
 }
