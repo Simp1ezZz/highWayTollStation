@@ -23,9 +23,6 @@ public class LoginServlet extends HttpServlet {
         {
             Cookie cookie = new Cookie("tollCollectorNo",admin.getTollCollectorNo());
             response.addCookie(cookie);
-            System.out.println(admin.getTollCollectorNo());
-            System.out.println(cookie.getValue());
-            System.out.println("----");
             request.getSession().setAttribute("user",admin.getUserName());
             response.sendRedirect("index.jsp");
         }else

@@ -14,8 +14,8 @@ public class TollCollectorInfo {
     private String sex;					//性别
     private String department;			//部门
     private String position;			//职位
-    private Date entryTime;			    //入职时间
-    private int phoneNo;                //电话
+    private String entryTime;			    //入职时间
+    private String phoneNo;                //电话
     private String email;               //邮箱
     private String homeAddress;         //家庭住址
 
@@ -67,19 +67,19 @@ public class TollCollectorInfo {
         this.position = position;
     }
 
-    public Date getEntryTime() {
+    public String getEntryTime() {
         return entryTime;
     }
 
-    public void setEntryTime(Date entryTime) {
+    public void setEntryTime(String entryTime) {
         this.entryTime = entryTime;
     }
 
-    public int getPhoneNo() {
+    public String getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 

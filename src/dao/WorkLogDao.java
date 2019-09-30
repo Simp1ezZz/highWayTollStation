@@ -23,9 +23,10 @@ public class WorkLogDao {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,tollCollectorNo);
             rs = pstmt.executeQuery();
-            WorkLog log = new WorkLog();
+            int i=0;
             while (rs.next())
             {
+                WorkLog log = new WorkLog();
                 log.setTollCollectorNo(rs.getString("tollCollectorNo"));
                 log.setTollBooshNo(rs.getString("tollBooshNo"));
                 log.setStartWorkTime(rs.getString("startWorkTime"));
@@ -47,7 +48,8 @@ public class WorkLogDao {
         boolean flag = false;
         dbConn = new DatabaseConn();
         try {
-            String sql = "insert into worklog(tollCollectorNo,tollBooshNo,startWorkTime,) values(?,?,?)";
+            conn = dbConn.getConnection();
+            String sql = "insert into worklog(tollCollectorNo,tollBooshNo,startWorkTime) values(?,?,?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, log.getTollCollectorNo());
             pstmt.setString(2, log.getTollBooshNo());
@@ -73,6 +75,7 @@ public class WorkLogDao {
         boolean onWork = false;
         dbConn = new DatabaseConn();
         try {
+            conn = dbConn.getConnection();
             String sql1 = "select * from worklog where tollCollectorNo=? and tollBooshNo=? and startWorkTime=?";
             pstmt = conn.prepareStatement(sql1);
             pstmt.setString(1,log.getTollCollectorNo());

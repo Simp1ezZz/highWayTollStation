@@ -2,14 +2,14 @@
 <!-- 组织机构管理 -->
 <div class="easyui-layout" data-options="fit:true">
     <div class="inner-header" data-options="region:'north'">
-        <a href="#" class="easyui-linkbutton" iconCls="icon-back">打卡上班</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-add">打卡下班</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-back" onclick="startWorkSubmit()">打卡上班</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="finishWorkSubmit()">打卡下班</a>
     </div>
     <div class="inner-content" data-options="region:'center'">
         <!-- 数据表 -->
         <table id="dg" class="easyui-datagrid" title="出勤状况" fit="true"
                data-options="fitColumns:true,url:'WorkLogPrintServlet',rownumbers:true,
-               autoRowHeight:false,pagination:true" toolbar="#toolbar2" striped="true" remoteSort="false">
+               autoRowHeight:false,pagination:true" toolbar="#toolbar2" striped="true" remoteSort="false" nowrap="false">
             <thead>
             <tr>
                 <th field="tollCollectorNo" width="240px" align="center" sortable="true">收费员编号</th>
@@ -19,9 +19,18 @@
             </tr>
             </thead>
         </table>
-
-        <!-- 数据表工具栏 -->
-        <!-- /数据表工具栏 -->
     </div>
 </div>
+<script>
+    function startWorkSubmit() {
+        $.ajax({
+            url: "StartWorkServlet",
+            type:"POST"
+        })
+        setTimeout(function yanchi(){$("#dg").datagrid("reload")},200);
+    }
+    function finishWorkSubmit() {
+        $("#").submit();
+    }
+</script>
 

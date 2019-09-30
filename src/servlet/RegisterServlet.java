@@ -2,6 +2,7 @@ package servlet;
 
 import bean.AdminInfo;
 import dao.AdminDao;
+import dao.TollCollectorDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +20,12 @@ public class RegisterServlet extends HttpServlet {
         String passWord = request.getParameter("passWord1");
         AdminInfo admin = new AdminInfo();
         AdminDao adminD = new AdminDao();
+        TollCollectorDao tollCollector = new TollCollectorDao();
         String msg=null;
         if(adminD.getUser(userName))
         {
             msg = "用户名已存在，请直接登陆!";
-        }else if(adminD.getTollCollectorNo(tollCollectorNo))
+        }else if(tollCollector.getTollCollectorNo(tollCollectorNo))
         {
             msg = "工号错误，请检查后再试！";
         }else {

@@ -23,19 +23,13 @@ public class WorkLogPrintServlet extends HttpServlet {
         String tollCollectorNo = null;
         Cookie [] cookies = request.getCookies();
         Cookie cookie =null;
-        System.out.println("a");
         for (int i=0;i<cookies.length;i++) {
             cookie = cookies[i];
             if("tollCollectorNo".equals(cookie.getName()))
                 tollCollectorNo = cookie.getValue();
-            /*System.out.println(tollCollectorNo);
-            System.out.println(cookie.getName());
-            System.out.println(cookie.getValue());
-            System.out.println(i);*/
         }
-        /*System.out.println(tollCollectorNo);*/
         JSONArray array = new JSONArray();
-        JSONObject log = new JSONObject();
+
         WorkLogDao logD = new WorkLogDao();
         ArrayList<WorkLog> logs;
         try {
@@ -43,6 +37,7 @@ public class WorkLogPrintServlet extends HttpServlet {
                 logs = logD.listAll(tollCollectorNo);
                 for(int i =0;i<logs.size();i++)
                 {
+                    JSONObject log = new JSONObject();
                     log.put("tollCollectorNo",logs.get(i).getTollCollectorNo());
                     log.put("tollBooshNo",logs.get(i).getTollBooshNo());
                     log.put("startWorkTime",logs.get(i).getStartWorkTime());

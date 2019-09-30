@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@WebServlet("/StartWorkServlet")
-public class StartWorkServlet extends HttpServlet {
+@WebServlet("/FinishWorkServlet")
+public class FinishWorkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //获取当前登陆的收费员
         String tollCollectorNo = null;

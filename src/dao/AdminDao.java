@@ -1,6 +1,7 @@
 package dao;
 
 import bean.AdminInfo;
+import bean.TollCollectorInfo;
 import utils.DatabaseConn;
 
 import java.sql.Connection;
@@ -69,30 +70,8 @@ public class AdminDao {
         }
         return flag;
     }
-    //收费员是否在系统
-    public boolean getTollCollectorNo(String tollCollectorNo) {
-        boolean flag = false;
-        dbConn = new DatabaseConn();
-        try {
-            conn = dbConn.getConnection();
-            String sql = "select tollCollectorNo from tollCollectorinfo where tollCollectorNo=?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, tollCollectorNo);
-            rs = pstmt.executeQuery();
-            if (rs.next())
-                flag = true;
-            if (rs != null)
-                rs.close();
-            if (pstmt != null)
-                pstmt.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null)
-                DatabaseConn.closeConn(conn);
-        }
-        return flag;
-    }
+
+
     //管理员表中添加
     public boolean insertAdmin(AdminInfo newAdmin) {
         boolean flag = false;

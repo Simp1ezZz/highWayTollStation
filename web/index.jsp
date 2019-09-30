@@ -18,7 +18,7 @@
     <div class="top-btns">
         <%if (session.getAttribute("user")!=null){%>
         <span>欢迎您，<%=session.getAttribute("user")%></span>
-        <a href="logout.jsp" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-lock'" onclick="">注销登录</a>
+        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-lock'" onclick="logout()">注销登录</a>
         <%}%>
         <% if (session.getAttribute("user")==null){
         %>
@@ -76,7 +76,7 @@
                                 style="width: 300px; height: 34px; padding: 10px">
                 </div>
             </form>
-            <div style="text-align: center; padding: 5px 0">
+            <div style="text-align: center; padding: 5px">
                 <a href="javascript:void(0)" id="register-submit-btn"
                    class="easyui-linkbutton" style="width: 80px">注册</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton"
@@ -251,6 +251,10 @@
     function toLogin() {
         $('#wRegister').window("close")
         $('#wLogin').window("open");
+    }
+    function logout() {
+        <% session.invalidate();%>
+        window.location.reload();
     }
 </script>
 </body>
