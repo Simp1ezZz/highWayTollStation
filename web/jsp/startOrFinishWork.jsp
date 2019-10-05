@@ -26,7 +26,7 @@
         var data = $('#dg').datagrid('getData');
 
         var user = <%=session.getAttribute("user")%>;
-        for(var i=1;i<data.total;i++){
+        for(var i=data.total-1;i>=0;i--){
             if(user=data.rows[i].tollCollectorNo && data.rows[i].finishWorkTime==null) {
                 $.messager.alert('请勿重复点击打卡！', '确保你之前的下班打卡已经完成！');
                 return;
@@ -37,6 +37,7 @@
             type:"POST"
         });
         setTimeout(function yanchi(){$("#dg").datagrid("reload")},200);
+        $.messager.alert('完成', '上班打卡已完成！记得下班打卡！');
 
     }
 
@@ -44,7 +45,7 @@
         var data = $('#dg').datagrid('getData');
 
         var user = <%=session.getAttribute("user")%>;
-        for(var i=1;i<data.total;i++){
+        for(var i=data.total-1;i>=0;i--){
             if(user=data.rows[i].tollCollectorNo && data.rows[i].finishWorkTime==null) {
                 $.ajax({
                     url: "FinishWorkServlet",
@@ -56,6 +57,7 @@
                 setTimeout(function yanchi() {
                     $("#dg").datagrid("reload")
                 }, 200);
+                $.messager.alert('完成', '下班打卡已完成！');
                 return;
             }
         }

@@ -44,8 +44,6 @@ public class WorkLogPrintServlet extends HttpServlet {
                     log.put("finishWorkTime",logs.get(i).getFinishWorkTime());
                     array.put(log);
                 }
-            }else{
-                //tollCollecterNo==null则数据库中没有工作信息，什么都不显示
             }
         }catch (SQLException e) {
             e.printStackTrace();

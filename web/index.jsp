@@ -90,15 +90,15 @@
     <div class="easyui-accordion" fit="true" id="navmenu">
         <div title="车道收费">
             <ul class="navmenu">
-                <li><a href="#" data-url="jsp/shangxiaban.jsp">上下班</a></li>
-                <li><a href="#" data-url="jsp/page01.html">车辆进站</a></li>
-                <li><a href="#" data-url="html/page02.html">收费出站</a></li>
+                <li><a href="#" data-url="jsp/startOrFinishWork.jsp">上下班</a></li>
+                <li><a href="#" data-url="jsp/inSite.jsp">车辆进站</a></li>
+                <li><a href="#" data-url="jsp/page02.html">收费出站</a></li>
             </ul>
         </div>
         <div title="收费站管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="html/page01.html">查询班次</a></li>
-                <li><a href="#" data-url="html/page01.html">安排班次</a></li>
+                <li><a href="#" data-url="jsp/page01.html">查询班次</a></li>
+                <li><a href="#" data-url="jsp/page.html">安排班次</a></li>
                 <li><a href="#" data-url="html/page02.html">收费员信息</a></li>
                 <li><a href="#" data-url="html/page02.html">车道信息</a></li>
             </ul>

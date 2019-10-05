@@ -41,10 +41,6 @@ public class FinishWorkServlet extends HttpServlet {
         log.setStartWorkTime(startWorkTime);
         log.setFinishWorkTime(df.format(day));
         WorkLogDao logD = new WorkLogDao();
-        System.out.println(log.getTollCollectorNo());
-        System.out.println(log.getTollBooshNo());
-        System.out.println(log.getStartWorkTime());
-        System.out.println(log.getFinishWorkTime());
         logD.finishWork(log);
     }
 
