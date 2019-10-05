@@ -21,7 +21,7 @@
         </table>
     </div>
 </div>
-<script>
+<script type="text/javascript">
     function startWorkSubmit() {
         var data = $('#dg').datagrid('getData');
 
