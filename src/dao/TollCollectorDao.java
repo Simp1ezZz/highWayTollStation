@@ -1,5 +1,7 @@
 package dao;
 
+import bean.LaneInfo;
+import bean.TollBooshInfo;
 import bean.TollCollectorInfo;
 import utils.DatabaseConn;
 
@@ -53,6 +55,7 @@ public class TollCollectorDao {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 collector.setTollCollectorNo(rs.getString("tollCollectorNo"));
+                collector.setLaneNo(rs.getString("laneNo"));
                 collector.setTollBoothNo(rs.getString("tollBoothNo"));
                 collector.setName(rs.getString("name"));
                 collector.setSex(rs.getString("sex"));
@@ -75,4 +78,55 @@ public class TollCollectorDao {
         }
         return collector;
     }
+
+    //查询收费员所在收费站名称及所属车道
+    public boolean getTollBooshAndLane(String tollCollectorNo, LaneInfo lane, TollBooshInfo tollBoosh){
+        boolean flag= false;
+        lane = new LaneInfo();
+        tollBoosh = new TollBooshInfo();
+        conn = dbConn.getConnection();
+        TollCollectorInfo collector = getTollCollector(tollCollectorNo);
+        String tollBooshNo = collector.getTollBoothNo();
+        String laneNo = collector.getLaneNo();
+        try{
+            String sql1="select * from tollBooshInfo where tollBooshNo=?";
+            pstmt = conn.prepareStatement(sql1);
+            pstmt.setString(1, tollBooshNo);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                tollBoosh.setTollBooshNo(rs.getString("tollBooshNo"));
+                tollBoosh.setTollBooshName(rs.getString("tollBooshName"));
+                tollBoosh.setNumbersOfLane(rs.getInt("numbersOfLane"));
+                tollBoosh.setTotalTrafficTime(rs.getFloat("totalTrafficTime"));
+                tollBoosh.setTotalTrafficVolume(rs.getInt("totalTrafficVolume"));
+            }
+            String sql2="select * from laneInfo where laneNo=?";
+            pstmt = conn.prepareStatement(sql2);
+            pstmt.setString(1,laneNo);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                lane.setLaneNo(rs.getString("laneNo"));
+                lane.setLaneName(rs.getString("laneName"));
+                lane.setPrincipal(rs.getString("principal"));
+                lane.setTrafficVolume(rs.getInt("trafficVolume"));
+                lane.setTrafficTime(rs.getFloat("trafficTime"));
+                lane.setTollBooshNo(rs.getString("tollBooshNo"));
+            }
+            if(lane!=null&&tollBoosh!=null)
+                flag = true;
+            if(rs!=null){
+                rs.close();
+            }
+            if(pstmt!=null){
+                pstmt.close();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(conn!=null)
+                DatabaseConn.closeConn(conn);
+        }
+        return flag;
+    }
+
 }
