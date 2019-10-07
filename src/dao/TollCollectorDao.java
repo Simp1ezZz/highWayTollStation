@@ -82,13 +82,12 @@ public class TollCollectorDao {
     //查询收费员所在收费站名称及所属车道
     public boolean getTollBooshAndLane(String tollCollectorNo, LaneInfo lane, TollBooshInfo tollBoosh){
         boolean flag= false;
-        lane = new LaneInfo();
-        tollBoosh = new TollBooshInfo();
-        conn = dbConn.getConnection();
+        dbConn = new DatabaseConn();
         TollCollectorInfo collector = getTollCollector(tollCollectorNo);
         String tollBooshNo = collector.getTollBoothNo();
         String laneNo = collector.getLaneNo();
         try{
+            conn = dbConn.getConnection();
             String sql1="select * from tollBooshInfo where tollBooshNo=?";
             pstmt = conn.prepareStatement(sql1);
             pstmt.setString(1, tollBooshNo);

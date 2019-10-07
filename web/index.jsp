@@ -126,27 +126,7 @@
 
         <div title="首页" iconCls="icon-ok">
             <div class="easyui-accordion" data-options="fit:true">
-                <div title="待办事项">
-                    <div class="flow-panel">
-                        <div class="flow-todo">
-                            <ul class="todo-list">
-                                <li>
-                                    <span>代办事项 A</span>
-                                    <a href="#" class="num">5</a>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div title="系统公告">
-                    <ul class="notice-list">
-                        <li>
-                            <span>黄金周出行高峰，各收费员辛苦了！</span>
-                            <span class="date">2019-9-28</span>
-                        </li>
-                    </ul>
-                </div>
+                <img src="img/background.png" style="width: 100%;height: 100%"/>
             </div>
         </div>
 

@@ -16,10 +16,10 @@ public class CardDao {
     //通过卡号获取行车卡信息
     public boolean getCardInfo(CardInfo card, String cardNo){
         boolean flag = false;
-        card = new CardInfo();
         dbConn = new DatabaseConn();
         try {
-            String sql = "select * from IcCardInfo where cardNo=?";
+            conn = dbConn.getConnection();
+            String sql = "select * from cardInfo where cardNo=?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, cardNo);
             rs = pstmt.executeQuery();

@@ -50,6 +50,7 @@
                 $.ajax({
                     url: "FinishWorkServlet",
                     type: "POST",
+                    dataType: 'text',
                     data:{
                         startWorkTime:data.rows[i].startWorkTime
                     }
