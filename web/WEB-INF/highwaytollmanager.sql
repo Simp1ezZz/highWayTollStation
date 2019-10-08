@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : DataBase
+ Source Server         : Database
  Source Server Type    : MySQL
  Source Server Version : 80017
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 07/10/2019 17:12:35
+ Date: 08/10/2019 22:33:05
 */
 
 SET NAMES utf8mb4;
@@ -45,15 +45,32 @@ CREATE TABLE `cardinfo`  (
   `carType` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `numberPlate` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `cardType` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `balance` float(8, 0) NOT NULL,
-  `usedFee` float(8, 0) NOT NULL,
+  `balance` float(32, 2) NOT NULL,
+  `usedFee` float(32, 2) NOT NULL,
   PRIMARY KEY (`cardNo`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cardinfo
 -- ----------------------------
-INSERT INTO `cardinfo` VALUES ('123456789', '000001', 'coach1', '皖A-12345', 'temporary', 100, 0);
+INSERT INTO `cardinfo` VALUES ('123', '000001', '客车(7座以下)', '皖A-12345', 'temporary', 500.00, 79.29);
+
+-- ----------------------------
+-- Table structure for feerateinfo
+-- ----------------------------
+DROP TABLE IF EXISTS `feerateinfo`;
+CREATE TABLE `feerateinfo`  (
+  `roadNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `carType` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `fee` float(32, 2) NOT NULL,
+  PRIMARY KEY (`roadNo`, `carType`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of feerateinfo
+-- ----------------------------
+INSERT INTO `feerateinfo` VALUES ('000001', '客车(7座以下)', 0.35);
+INSERT INTO `feerateinfo` VALUES ('000002', '客车(7座以下)', 0.35);
 
 -- ----------------------------
 -- Table structure for laneinfo
@@ -63,16 +80,32 @@ CREATE TABLE `laneinfo`  (
   `laneNo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `tollBooshNo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `principal` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trafficVolume` int(8) NOT NULL,
-  `trafficTime` float(16, 0) NOT NULL,
-  `laneName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`laneNo`) USING BTREE
+  `laneName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of laneinfo
 -- ----------------------------
-INSERT INTO `laneinfo` VALUES ('001', '100000', '190001', 0, 0, '1车道');
+INSERT INTO `laneinfo` VALUES ('001', '100000', '190001', '1车道');
+INSERT INTO `laneinfo` VALUES ('002', '110000', '100001', '2车道');
+
+-- ----------------------------
+-- Table structure for roadinfo
+-- ----------------------------
+DROP TABLE IF EXISTS `roadinfo`;
+CREATE TABLE `roadinfo`  (
+  `roadNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `startTollBooshNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `endTollBooshNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `roadMileage` float(32, 1) NOT NULL,
+  PRIMARY KEY (`roadNo`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of roadinfo
+-- ----------------------------
+INSERT INTO `roadinfo` VALUES ('000001', '100000', '110000', 75.5);
+INSERT INTO `roadinfo` VALUES ('000002', '110000', '100000', 75.5);
 
 -- ----------------------------
 -- Table structure for tollbooshinfo
@@ -81,8 +114,6 @@ DROP TABLE IF EXISTS `tollbooshinfo`;
 CREATE TABLE `tollbooshinfo`  (
   `tollBooshNo` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `numbersOfLane` int(8) NOT NULL,
-  `totalTrafficVolume` int(8) NOT NULL,
-  `totalTrafficTime` int(8) NOT NULL,
   `tollBooshName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`tollBooshNo`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -90,7 +121,8 @@ CREATE TABLE `tollbooshinfo`  (
 -- ----------------------------
 -- Records of tollbooshinfo
 -- ----------------------------
-INSERT INTO `tollbooshinfo` VALUES ('100000', 12, 0, 0, '合肥高速收费站');
+INSERT INTO `tollbooshinfo` VALUES ('100000', 12, '合肥高速收费站');
+INSERT INTO `tollbooshinfo` VALUES ('110000', 10, '淮南高速收费站');
 
 -- ----------------------------
 -- Table structure for tollcollectorinfo
@@ -107,15 +139,46 @@ CREATE TABLE `tollcollectorinfo`  (
   `phoneNo` varchar(12) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `homeAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `laneNo` varchar(0) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `laneNo` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`tollCollectorNo`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tollcollectorinfo
 -- ----------------------------
-INSERT INTO `tollcollectorinfo` VALUES ('100001', '100000', 'cxk', '男', '合淮高速收费站', '收费员', '2019-09-29', '123123123', '123123123@123.com', '北京', '');
-INSERT INTO `tollcollectorinfo` VALUES ('190001', '100000', 'zx', '男', '合淮高速收费站', '收费员', '2019-09-01', '1234567891', '222222@qq.com', '安徽合肥', '');
+INSERT INTO `tollcollectorinfo` VALUES ('100001', '110000', 'cxk', '男', '合淮高速收费站', '收费员', '2019-09-29', '123123123', '123123123@123.com', '北京', '002');
+INSERT INTO `tollcollectorinfo` VALUES ('190001', '100000', 'zx', '男', '合淮高速收费站', '收费员', '2019-09-01', '1234567891', '222222@qq.com', '安徽合肥', '001');
+
+-- ----------------------------
+-- Table structure for trafficinfo
+-- ----------------------------
+DROP TABLE IF EXISTS `trafficinfo`;
+CREATE TABLE `trafficinfo`  (
+  `cardNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `startTollBooshNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `startLaneNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `startTime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `endTollBooshNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `endLaneNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `endTime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mileage` float(32, 1) NULL DEFAULT NULL,
+  `totalFee` float(32, 2) NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of trafficinfo
+-- ----------------------------
+INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 21:37:43', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 21:38:3', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 21:44:10', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 21:44:30', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 21:50:11', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 21:50:27', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 22:0:22', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 22:14:50', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 22:15:18', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 22:15:35', '110000', '002', '2019/10/8 22:15:49', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 22:15:55', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for worklog
@@ -128,7 +191,7 @@ CREATE TABLE `worklog`  (
   `finishWorkTime` datetime(0) NULL DEFAULT NULL,
   `tollBooshNo` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`workLogNo`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of worklog
@@ -138,41 +201,8 @@ INSERT INTO `worklog` VALUES (0000000002, '190001', '2019-09-30 17:20:33', '2019
 INSERT INTO `worklog` VALUES (0000000003, '100001', '2019-09-30 17:21:25', '2019-09-30 20:21:28', '100000');
 INSERT INTO `worklog` VALUES (0000000004, '100001', '2019-09-30 17:30:54', '2019-09-30 22:30:57', '100000');
 INSERT INTO `worklog` VALUES (0000000005, '190001', '2019-10-07 13:37:08', '2019-10-07 13:37:10', '100000');
-
--- ----------------------------
--- Table structure for 入站信息表
--- ----------------------------
-DROP TABLE IF EXISTS `入站信息表`;
-CREATE TABLE `入站信息表`  (
-  `收费站编号` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `位置` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `所属路段` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `车道数量` int(8) NOT NULL,
-  PRIMARY KEY (`收费站编号`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for 班次信息表
--- ----------------------------
-DROP TABLE IF EXISTS `班次信息表`;
-CREATE TABLE `班次信息表`  (
-  `日期` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `收费站编号` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `班次` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `值班姓名` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`日期`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for 车辆信息表
--- ----------------------------
-DROP TABLE IF EXISTS `车辆信息表`;
-CREATE TABLE `车辆信息表`  (
-  `车牌号` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `车辆信息` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `路段类型` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `单里程费用` int(8) NOT NULL,
-  PRIMARY KEY (`车辆信息`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+INSERT INTO `worklog` VALUES (0000000006, '190001', '2019-10-07 22:17:06', '2019-10-07 22:17:07', '100000');
+INSERT INTO `worklog` VALUES (0000000007, '190001', '2019-10-08 00:13:40', '2019-10-08 00:13:43', '100000');
+INSERT INTO `worklog` VALUES (0000000008, '100001', '2019-10-08 17:02:14', '2019-10-08 21:25:52', '110000');
 
 SET FOREIGN_KEY_CHECKS = 1;
