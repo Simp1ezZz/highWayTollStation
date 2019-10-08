@@ -13,65 +13,69 @@
     <input class="text" value="出口车道：" readonly unselectable="on">
     <input class="text" id="outTollBooshName" readonly unselectable="on">
     <input class="text" id="outLaneName" readonly unselectable="on">
+    <input id="tollBooshNo" readonly unselectable="on" type="hidden">
+    <input id="laneNo" readonly unselectable="on" type="hidden">
 </div>
 <div>
     <input class="text" value="当前时间：" readonly unselectable="on">
-    <input class="text" id="currentTime" readonly unselectable="on">
+    <input class="text" id="endTime" readonly unselectable="on">
 </div>
 
 <div>
     <input class="text" value="IC卡号：" readonly unselectable="on">
-    <input style="font-size: 20px" id="cardNo" onkeyup="query()">
+    <input style="font-size: 20px" id="cardNo2" onkeyup="query2()">
 
 </div>
 <div>
     <input class="text" value="车型：" readonly unselectable="on">
-    <input class="text" id="carType" readonly unselectable="on">
+    <input class="text" id="carType2" readonly unselectable="on">
 
 </div>
 <div>
     <input class="text" value="车牌号：" readonly unselectable="on">
-    <input class="text" id="numberPlate" readonly unselectable="on">
+    <input class="text" id="numberPlate2" readonly unselectable="on">
 </div>
 <div>
     <input class="text" value="进站车道：" readonly unselectable="on">
-    <input class="text" id="inTollBooshName" readonly unselectable="on">
-    <input class="text" id="inLaneName" readonly unselectable="on">
+    <input class="text" id="startTollBooshName" readonly unselectable="on">
+    <input class="text" id="startLaneName" readonly unselectable="on">
 </div>
 <div>
     <input class="text" value="里程数：" readonly unselectabel="on">
-    <input class="text" id="mileage" readonly unselectable="on">
+    <input class="text" id="mile" readonly unselectable="on">
 </div>
 <div>
     <input class="text" value="通行费用：" readonly unselectable="on">
     <input class="text" id="totalFee" readonly unselectable="on">
 </div>
-<div style="text-align: center; padding: 30px 100px">
+<div style="padding-left: 200px;padding-top: 50px">
     <a href="javascript:void(0)" id="outSite-submit-btn"
-       class="easyui-linkbutton" style="width: 80px">收费出站</a>
+       class="easyui-linkbutton" style="width: 80px" onclick="outSiteSubmit()">收费出站</a>
 </div>
-<%--
 <script type="text/javascript">
-    var tollBooshNo;
     //查询ic卡信息并显示
-    function query() {
-        document.getElementById("carType").value ='';
-        document.getElementById("numberPlate").value ='';
-        var cardNo = $("#cardNo").val();
+    function query2() {
+        document.getElementById("carType2").value ='';
+        document.getElementById("numberPlate2").value ='';
+        document.getElementById("mile").value='';
+        document.getElementById("totalFee").value= '';
+        document.getElementById("startTollBooshName").value='';
+        document.getElementById("startLaneName").value='';
+        var cardNo = $("#cardNo2").val();
         if(cardNo!=null){
             $.ajax({
                 url:"ShowSiteInfoServlet",
                 type:"POST",
                 async:false,
                 data:{
-                    cardNo:cardNo
+                    cardNo:cardNo.replace(/(^\s*)|(\s*$)/g, '')
                 },
-                success:function (jsonData) {
-                    var data = eval('('+jsonData+')');
+                success:function (result2) {
+                    var data = eval('('+result2+')');
                     if(data.carType!=null) {
-                        document.getElementById("carType").value = data.carType;
-                        document.getElementById("numberPlate").value = data.numberPlate;
-
+                        document.getElementById("carType2").value = data.carType;
+                        document.getElementById("numberPlate2").value = data.numberPlate;
+                        showMileAndFee();
                     }
                 }
             })
@@ -85,47 +89,76 @@
             async:false,
             success:function (jsonData) {
                 var data = eval('('+jsonData+')');
-                document.getElementById("tollBooshName").value=data.tollBooshName;
-                document.getElementById("laneName").value=data.laneName;
-                tollBooshNo = data.tollBooshNo;
+                document.getElementById("outTollBooshName").value=data.tollBooshName;
+                document.getElementById("outLaneName").value=data.laneName;
+                document.getElementById("tollBooshNo").value=data.tollBooshNo;
+                document.getElementById("laneNo").value=data.laneNo;
             }
         })
     }
     //显示当前收费时间
-    function getTime() {
+    function getOutTime() {
         var myDate = new Date();
         var date = myDate.toLocaleDateString();
         var hours = myDate.getHours();
         var minutes = myDate.getMinutes();
         var seconds = myDate.getSeconds();
         var currentTime = date+' '+hours+':'+minutes+':'+seconds;
-        document.getElementById("currentTime").value=currentTime;
+        document.getElementById("endTime").value=currentTime;
     }
-    showInfo();
-    setInterval(getTime,1000);
-    function outSiteSubmit() {
+    //显示里程及通行费用
+    function showMileAndFee() {
 
+        var cardNo = $("#cardNo2").val();
+        var time = $("#endTime").val();
+        var tollBooshNo = $("#tollBooshNo").val();
+        $.ajax({
+            url:"ShowMileAndFeeServlet",
+            type:"POST",
+            async:false,
+            data:{
+                cardNo:cardNo,
+                time:time,
+                tollBooshNo:tollBooshNo
+            },
+            success:function (jsonData) {
+                var data = eval('('+jsonData+')');
+                var fee = data.totalFee;
+                document.getElementById("mile").value=data.mile;
+                document.getElementById("totalFee").value=fee.toFixed(2);
+                document.getElementById("startTollBooshName").value=data.startTollBooshName;
+                document.getElementById("startLaneName").value=data.startLaneName;
+            }
+        })
     }
-    /*function outSiteSubmit() {
-        var inSiteTime = $("#currentTime").val();
-        var cardNo = $("#cardNo").val();
+    function outSiteSubmit() {
+        var time = $("#endTime").val();
+        var cardNo = $("#cardNo2").val();
+        var tollBooshNo = $("#tollBooshNo").val();
+        var laneNo = $("#laneNo").val();
         if(cardNo.replace(/(^\s*)|(\s*$)/g, '')) {
             $.ajax({
-                url: "InSiteServlet",
+                url: "OutSiteServlet",
                 type: "POST",
                 async: false,
                 data: {
-                    cardNo: cardNo,
-                    inSiteTime: inSiteTime,
-                    tollBooshNo: tollBooshNo
+                    cardNo: cardNo.replace(/(^\s*)|(\s*$)/g, ''),
+                    endTime: time,
+                    tollBooshNo: tollBooshNo,
+                    laneNo:laneNo
                 },
-                success: function (json) {
-                    var result = eval('(' + json + ')');
+                success: function (jsonObject) {
+                    var result = eval('(' + jsonObject + ')');
+                    console.log(result.msg);
                     $.messager.alert('提示', result.msg);
                 }
             })
         }else {
             $.messager.alert('提示', "请输入正确的IC卡号！");
         }
-    }*/
-</script>--%>
+    }
+
+    showInfo();
+    getOutTime();
+    setInterval(getOutTime,1000);
+</script>

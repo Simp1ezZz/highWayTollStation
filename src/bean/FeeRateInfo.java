@@ -5,42 +5,30 @@ public class FeeRateInfo {
 
     }
 
-    private String siteCombinationNo;	//站点组合编号
-    private String startSiteNo;			//起始站点编号
-    private String endSiteNo;			//终止站点编号
-    private int siteLenth;				//站点组合长度
-    private int fee;					//费率
+    private String roadNo;	            //路段编号
+    private String carType;             //车型
+    private float fee;					//费率
 
-    public String getSiteCombinationNo() {
-        return siteCombinationNo;
+    public String getRoadNo() {
+        return roadNo;
     }
-    public void setSiteCombinationNo(String siteCombinationNo) {
-        this.siteCombinationNo = siteCombinationNo;
+
+    public void setRoadNo(String roadNo) {
+        this.roadNo = roadNo;
     }
-    public String getStartSiteNo() {
-        return startSiteNo;
-    }
-    public void setStartSiteNo(String startSiteNo) {
-        this.startSiteNo = startSiteNo;
-    }
-    public String getEndSiteNo() {
-        return endSiteNo;
-    }
-    public void setEndSiteNo(String endSiteNo) {
-        this.endSiteNo = endSiteNo;
-    }
-    public int getSiteLenth() {
-        return siteLenth;
-    }
-    public void setSiteLenth(int siteLenth) {
-        this.siteLenth = siteLenth;
-    }
-    public int getFee() {
+
+    public float getFee() {
         return fee;
     }
-    public void setFee(int fee) {
+    public void setFee(float fee) {
         this.fee = fee;
     }
 
+    public String getCarType() {
+        return carType;
+    }
 
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
 }

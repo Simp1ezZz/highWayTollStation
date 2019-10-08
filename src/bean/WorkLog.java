@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class WorkLog {
 
-    private String tollCollectorNo;
-    private String tollBooshNo;
-    private String startWorkTime;
-    private String finishWorkTime;
+    private String tollCollectorNo;         //收费员编号
+    private String tollBooshNo;             //所属收费站编号
+    private String startWorkTime;           //上班时间
+    private String finishWorkTime;          //下班时间
 
     public String getTollCollectorNo() {
         return tollCollectorNo;

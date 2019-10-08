@@ -1,12 +1,10 @@
 package bean;
 
 public class LaneInfo {
-    private String laneNo;
-    private String laneName;
-    private String tollBooshNo;
-    private String principal;
-    private int trafficVolume;
-    private float trafficTime;
+    private String laneNo;          //车道编号
+    private String laneName;        //车道名称
+    private String tollBooshNo;     //所属收费站编号
+    private String principal;       //负责人
 
     public String getLaneNo() {
         return laneNo;
@@ -40,19 +38,4 @@ public class LaneInfo {
         this.principal = principal;
     }
 
-    public int getTrafficVolume() {
-        return trafficVolume;
-    }
-
-    public void setTrafficVolume(int trafficVolume) {
-        this.trafficVolume = trafficVolume;
-    }
-
-    public float getTrafficTime() {
-        return trafficTime;
-    }
-
-    public void setTrafficTime(float trafficTime) {
-        this.trafficTime = trafficTime;
-    }
 }

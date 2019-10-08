@@ -1,5 +1,6 @@
 package servlet;
 
+import bean.TrafficInfo;
 import com.mysql.cj.xdevapi.JsonArray;
 import dao.InOutSiteDao;
 import net.sf.json.JSONObject;
@@ -20,15 +21,21 @@ public class InSiteServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         String cardNo = request.getParameter("cardNo");
-        String inSiteTollBooshNo = request.getParameter("tollBooshNo");
-        String inSiteTime = request.getParameter("inSiteTime");
+        String startTollBooshNo = request.getParameter("tollBooshNo");
+        String startTime = request.getParameter("startTime");
+        String startLaneNo = request.getParameter("laneNo");
         InOutSiteDao inOutSiteDao = new InOutSiteDao();
         JSONObject json = new JSONObject();
-        if(inOutSiteDao.inSite(cardNo,inSiteTollBooshNo,inSiteTime)){
+        TrafficInfo traffic = new TrafficInfo();
+        traffic.setCardNo(cardNo);
+        traffic.setStartTollBooshNo(startTollBooshNo);
+        traffic.setStartLaneNo(startLaneNo);
+        traffic.setStartTime(startTime);
+        if(inOutSiteDao.inSite(traffic)){
             json.put("msg","提交成功!");
             out.print(json.toString());
         }else{
-            json.put("msg","提交失败!请勿重复提交!");
+            json.put("msg","请勿重复提交！  请检查IC卡号是否正确！");
             out.print(json.toString());
         }
     }

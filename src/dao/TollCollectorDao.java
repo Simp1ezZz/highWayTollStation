@@ -96,8 +96,6 @@ public class TollCollectorDao {
                 tollBoosh.setTollBooshNo(rs.getString("tollBooshNo"));
                 tollBoosh.setTollBooshName(rs.getString("tollBooshName"));
                 tollBoosh.setNumbersOfLane(rs.getInt("numbersOfLane"));
-                tollBoosh.setTotalTrafficTime(rs.getFloat("totalTrafficTime"));
-                tollBoosh.setTotalTrafficVolume(rs.getInt("totalTrafficVolume"));
             }
             String sql2="select * from laneInfo where laneNo=?";
             pstmt = conn.prepareStatement(sql2);
@@ -107,8 +105,6 @@ public class TollCollectorDao {
                 lane.setLaneNo(rs.getString("laneNo"));
                 lane.setLaneName(rs.getString("laneName"));
                 lane.setPrincipal(rs.getString("principal"));
-                lane.setTrafficVolume(rs.getInt("trafficVolume"));
-                lane.setTrafficTime(rs.getFloat("trafficTime"));
                 lane.setTollBooshNo(rs.getString("tollBooshNo"));
             }
             if(lane!=null&&tollBoosh!=null)

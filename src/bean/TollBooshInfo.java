@@ -1,11 +1,9 @@
 package bean;
 
 public class TollBooshInfo {
-    private String tollBooshNo;
-    private String tollBooshName;
-    private int numbersOfLane;
-    private int totalTrafficVolume;
-    private float totalTrafficTime;
+    private String tollBooshNo;         //收费站编号
+    private String tollBooshName;       //收费站名称
+    private int numbersOfLane;          //收费站车道数
 
     public String getTollBooshNo() {
         return tollBooshNo;
@@ -31,19 +29,4 @@ public class TollBooshInfo {
         this.numbersOfLane = numbersOfLane;
     }
 
-    public int getTotalTrafficVolume() {
-        return totalTrafficVolume;
-    }
-
-    public void setTotalTrafficVolume(int totalTrafficVolume) {
-        this.totalTrafficVolume = totalTrafficVolume;
-    }
-
-    public float getTotalTrafficTime() {
-        return totalTrafficTime;
-    }
-
-    public void setTotalTrafficTime(float totalTrafficTime) {
-        this.totalTrafficTime = totalTrafficTime;
-    }
 }

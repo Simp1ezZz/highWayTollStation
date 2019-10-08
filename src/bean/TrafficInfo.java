@@ -1,44 +1,62 @@
 package bean;
-//入站信息表
+//出入站信息表
 public class TrafficInfo {
-    private String inSiteTollBooshNo;       //入站收费站编号
-    private String inSiteTime;              //入站时间
-    private String outSiteTollBooshNo;      //出站收费站编号
-    private String outSiteTime;             //出站时间
+    private String startTollBooshNo;        //入站收费站编号
+    private String startLaneNo;             //入站车道编号
+    private String startTime;               //入站时间
+    private String endTollBooshNo;          //出站收费站编号
+    private String endLaneNo;               //出站车道编号
+    private String endTime;                 //出站时间
     private String cardNo;                  //行车卡编号
     private float mileage;                  //里程数
     private float totalFee;                 //行程费用
 
-    public String getInSiteTollBooshNo() {
-        return inSiteTollBooshNo;
+    public String getStartLaneNo() {
+        return startLaneNo;
     }
 
-    public void setInSiteTollBooshNo(String inSiteTollBooshNo) {
-        this.inSiteTollBooshNo = inSiteTollBooshNo;
+    public void setStartLaneNo(String startLaneNo) {
+        this.startLaneNo = startLaneNo;
     }
 
-    public String getInSiteTime() {
-        return inSiteTime;
+    public String getEndLaneNo() {
+        return endLaneNo;
     }
 
-    public void setInSiteTime(String inSiteTime) {
-        this.inSiteTime = inSiteTime;
+    public void setEndLaneNo(String endLaneNo) {
+        this.endLaneNo = endLaneNo;
     }
 
-    public String getOutSiteTollBooshNo() {
-        return outSiteTollBooshNo;
+    public String getStartTollBooshNo() {
+        return startTollBooshNo;
     }
 
-    public void setOutSiteTollBooshNo(String outSiteTollBooshNo) {
-        this.outSiteTollBooshNo = outSiteTollBooshNo;
+    public void setStartTollBooshNo(String startTollBooshNo) {
+        this.startTollBooshNo = startTollBooshNo;
     }
 
-    public String getOutSiteTime() {
-        return outSiteTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setOutSiteTime(String outSiteTime) {
-        this.outSiteTime = outSiteTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTollBooshNo() {
+        return endTollBooshNo;
+    }
+
+    public void setEndTollBooshNo(String endTollBooshNo) {
+        this.endTollBooshNo = endTollBooshNo;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getCardNo() {

@@ -50,4 +50,30 @@ public class CardDao {
         return flag;
     }
 
+    //更新行车卡费用信息
+    public boolean changeFee(CardInfo cardInfo){
+        boolean flag = false;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "UPDATE cardInfo SET balance=?,usedFee=?where cardNo=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setFloat(1, cardInfo.getBalance());
+            pstmt.setFloat(2, cardInfo.getUsedFee());
+            pstmt.setString(3, cardInfo.getCardNo());
+            int i = pstmt.executeUpdate();
+            if (i > 0) {
+                flag = true;
+            }
+            if (pstmt != null)
+                pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                DatabaseConn.closeConn(conn);
+        }
+        return flag;
+    }
+
 }

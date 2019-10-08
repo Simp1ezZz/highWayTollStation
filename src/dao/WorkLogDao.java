@@ -107,7 +107,6 @@ public class WorkLogDao {
             pstmt.setString(3, log.getTollBooshNo());
             pstmt.setString(4,log.getStartWorkTime());
             int i = pstmt.executeUpdate();
-            System.out.println(i);
             if (i > 0)
                 flag = true;
             if (pstmt != null)

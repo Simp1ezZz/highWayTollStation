@@ -59,6 +59,7 @@ public class ShowSiteInfoServlet extends HttpServlet {
             JsonInfo.put("laneName", lane.getLaneName());
             JsonInfo.put("tollBooshName", tollBoosh.getTollBooshName());
             JsonInfo.put("tollBooshNo",tollBoosh.getTollBooshNo());
+            JsonInfo.put("laneNo",lane.getLaneNo());
             out.print(JsonInfo.toString());
         }
         out.close();

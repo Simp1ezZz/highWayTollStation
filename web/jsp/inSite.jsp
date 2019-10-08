@@ -17,25 +17,25 @@
 </div>
 <div>
     <input class="text" value="当前时间：" readonly unselectable="on">
-    <input class="text" id="currentTime" readonly unselectable="on">
+    <input class="text" id="startTime" readonly unselectable="on">
 </div>
 
 <div style="margin-bottom: 30px">
     <input class="text" value="IC卡号：" readonly unselectable="on">
-    <input style="font-size: 20px" id="cardNo" onkeyup="query()">
+    <input style="font-size: 20px" id="cardNo1" onkeyup="query1()">
 
 </div>
 <div>
     <input class="text" value="车型：" readonly unselectable="on">
-    <input class="text" id="carType" readonly unselectable="on">
+    <input class="text" id="carType1" readonly unselectable="on">
 
 </div>
 <div style="margin-bottom: 25px">
     <input class="text" value="车牌号：" readonly unselectable="on">
-    <input class="text" id="numberPlate" readonly unselectable="on">
+    <input class="text" id="numberPlate1" readonly unselectable="on">
 
 </div>
-<div style="text-align: center; padding: 30px 200px">
+<div style="padding-left: 350px;padding-top: 50px">
     <a href="javascript:void(0)" id="inSite-submit-btn"
        class="easyui-linkbutton" style="width: 80px" onclick="inSiteSubmit()">进站提交</a>
 </div>
@@ -43,24 +43,25 @@
 
 <script type="text/javascript">
     var tollBooshNo;
+    var laneNo;
     //查询ic卡信息并显示
-     function query() {
-         document.getElementById("carType").value ='';
-         document.getElementById("numberPlate").value ='';
-         var cardNo = $("#cardNo").val();
+     function query1() {
+         document.getElementById("carType1").value ='';
+         document.getElementById("numberPlate1").value ='';
+         var cardNo = $("#cardNo1").val();
          if(cardNo!=null){
              $.ajax({
                  url:"ShowSiteInfoServlet",
                  type:"POST",
                  async:false,
                  data:{
-                     cardNo:cardNo
+                     cardNo:cardNo.replace(/\s*/g,"")
                  },
-                 success:function (jsonData) {
-                     var data = eval('('+jsonData+')');
+                 success:function (result) {
+                     var data = eval('('+result+')');
                      if(data.carType!=null) {
-                         document.getElementById("carType").value = data.carType;
-                         document.getElementById("numberPlate").value = data.numberPlate;
+                         document.getElementById("carType1").value = data.carType;
+                         document.getElementById("numberPlate1").value = data.numberPlate;
 
                      }
                  }
@@ -78,33 +79,36 @@
                 document.getElementById("tollBooshName").value=data.tollBooshName;
                 document.getElementById("laneName").value=data.laneName;
                 tollBooshNo = data.tollBooshNo;
+                laneNo = data.laneNo;
             }
         })
     }
     //显示当前收费时间
-    function getTime() {
+    function getInTime() {
         var myDate = new Date();
         var date = myDate.toLocaleDateString();
         var hours = myDate.getHours();
         var minutes = myDate.getMinutes();
         var seconds = myDate.getSeconds();
         var currentTime = date+' '+hours+':'+minutes+':'+seconds;
-        document.getElementById("currentTime").value=currentTime;
+        document.getElementById("startTime").value=currentTime;
     }
      showInfo();
-     setInterval(getTime,1000);
+     getInTime();
+     setInterval(getInTime,1000);
     function inSiteSubmit() {
-        var inSiteTime = $("#currentTime").val();
-        var cardNo = $("#cardNo").val();
+        var startTime = $("#startTime").val();
+        var cardNo = $("#cardNo1").val();
         if(cardNo.replace(/(^\s*)|(\s*$)/g, '')) {
             $.ajax({
                 url: "InSiteServlet",
                 type: "POST",
                 async: false,
                 data: {
-                    cardNo: cardNo,
-                    inSiteTime: inSiteTime,
-                    tollBooshNo: tollBooshNo
+                    cardNo: cardNo.replace(/\s*/g,""),
+                    startTime: startTime,
+                    tollBooshNo: tollBooshNo,
+                    laneNo:laneNo
                 },
                 success: function (json) {
                     var result = eval('(' + json + ')');
@@ -112,7 +116,7 @@
                 }
             })
         }else {
-            $.messager.alert('提示', "请输入正确的IC卡号！");
+            $.messager.alert('提示', "请输入IC卡号！");
         }
     }
 </script>
