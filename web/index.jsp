@@ -92,7 +92,7 @@
             <ul class="navmenu">
                 <li><a href="#" data-url="jsp/startOrFinishWork.jsp">上下班</a></li>
                 <li><a href="#" data-url="jsp/inSite.jsp">车辆进站</a></li>
-                <li><a href="#" data-url="jsp/page02.html">收费出站</a></li>
+                <li><a href="#" data-url="jsp/outSite.jsp">收费出站</a></li>
             </ul>
         </div>
         <div title="收费站管理">

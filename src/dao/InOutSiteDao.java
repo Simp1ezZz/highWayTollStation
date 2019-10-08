@@ -39,5 +39,19 @@ public class InOutSiteDao {
         return flag;
     }
 
+    //是否有入站记录
+    public boolean isInSite(String cardNo){
+        boolean flag = false;
+        dbConn = new DatabaseConn();
+
+        return flag;
+    }
+
     //车辆出站
+    public boolean outSite(){
+        boolean flag=false;
+
+
+        return flag;
+    }
 }
