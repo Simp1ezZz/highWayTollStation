@@ -30,7 +30,7 @@ public class StartWorkServlet extends HttpServlet {
         WorkLogDao logD = new WorkLogDao();
         TollCollectorInfo tollCollector = new TollCollectorInfo();
         TollCollectorDao tollCollectorD = new TollCollectorDao();
-        tollCollector=tollCollectorD.getTollCollector(tollCollectorNo);
+        tollCollectorD.getTollCollector(tollCollectorNo,tollCollector);
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         WorkLog log = new WorkLog();

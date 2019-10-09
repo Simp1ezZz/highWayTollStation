@@ -95,17 +95,15 @@
                 <li><a href="#" data-url="jsp/outSite.jsp">收费出站</a></li>
             </ul>
         </div>
-        <div title="收费站管理">
+        <div title="报表管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="jsp/page01.html">查询班次</a></li>
-                <li><a href="#" data-url="jsp/page.html">安排班次</a></li>
-                <li><a href="#" data-url="html/page02.html">收费员信息</a></li>
-                <li><a href="#" data-url="html/page02.html">车道信息</a></li>
+                <li><a href="#" data-url="jsp/page01.html">通行流量表</a></li>
+                <li><a href="#" data-url="jsp/accountFlowTable.jsp">账目流水表</a></li>
             </ul>
         </div>
         <div title="行车卡管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="html/page01.html">办理行车卡</a></li>
+                <li><a href="#" data-url="jsp/cardLogin.jsp">办理行车卡</a></li>
                 <li><a href="#" data-url="html/page01.html">注销行车卡</a></li>
                 <li><a href="#" data-url="html/page02.html">行车卡充值</a></li>
                 <li><a href="#" data-url="html/page02.html">查询卡信息</a></li>

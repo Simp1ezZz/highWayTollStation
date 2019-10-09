@@ -44,8 +44,8 @@ public class TollCollectorDao {
     }
 
     //查询收费员信息
-    public TollCollectorInfo getTollCollector(String tollCollectorNo) {
-        TollCollectorInfo collector = new TollCollectorInfo();
+    public boolean getTollCollector(String tollCollectorNo,TollCollectorInfo collector) {
+        boolean flag = false;
         dbConn = new DatabaseConn();
         try {
             conn = dbConn.getConnection();
@@ -65,6 +65,7 @@ public class TollCollectorDao {
                 collector.setEntryTime(rs.getString("entryTime"));
                 collector.setHomeAddress(rs.getString("homeAddress"));
                 collector.setPhoneNo(rs.getString("phoneNo"));
+                flag = true;
             }
             if (rs != null)
                 rs.close();
@@ -76,14 +77,15 @@ public class TollCollectorDao {
             if (conn != null)
                 DatabaseConn.closeConn(conn);
         }
-        return collector;
+        return flag;
     }
 
     //查询收费员所在收费站名称及所属车道
     public boolean getTollBooshAndLane(String tollCollectorNo, LaneInfo lane, TollBooshInfo tollBoosh){
         boolean flag= false;
         dbConn = new DatabaseConn();
-        TollCollectorInfo collector = getTollCollector(tollCollectorNo);
+        TollCollectorInfo collector = new TollCollectorInfo();
+        getTollCollector(tollCollectorNo,collector);
         String tollBooshNo = collector.getTollBoothNo();
         String laneNo = collector.getLaneNo();
         try{

@@ -98,12 +98,26 @@
     }
     //显示当前收费时间
     function getOutTime() {
-        var myDate = new Date();
-        var date = myDate.toLocaleDateString();
-        var hours = myDate.getHours();
-        var minutes = myDate.getMinutes();
-        var seconds = myDate.getSeconds();
-        var currentTime = date+' '+hours+':'+minutes+':'+seconds;
+        var nowYear=new Date().getFullYear().toString()
+        var nowMonth=(new Date().getMonth() + 1).toString()
+        var nowDay=new Date().getDate().toString();
+        var nowHours= new Date().getHours().toString();       //获取当前小时数(0-23)
+        var nowMin= new Date().getMinutes().toString();     //获取当前分钟数(0-59)
+        var nowSeconds= new Date().getSeconds().toString();     //获取当前秒数(0-59)
+        function timeAdd0(str) {
+            if(str.length<=1){
+                str='0'+str;
+            }
+            return str
+        }
+        nowYear=timeAdd0(nowYear)
+        nowMonth=timeAdd0(nowMonth)
+        nowDay=timeAdd0(nowDay)
+        nowHours=timeAdd0(nowHours)
+        nowMin=timeAdd0(nowMin)
+        nowSeconds=timeAdd0(nowSeconds)
+
+        var currentTime = nowYear+'-'+nowMonth+'-'+nowDay+' '+nowHours+':'+nowMin+':'+nowSeconds;
         document.getElementById("endTime").value=currentTime;
     }
     //显示里程及通行费用

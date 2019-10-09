@@ -29,9 +29,9 @@ public class FinishWorkServlet extends HttpServlet {
         }
         //获取ajax传来的startWorkTime
         String startWorkTime=request.getParameter("startWorkTime");
-        TollCollectorInfo tollCollector;
+        TollCollectorInfo tollCollector = new TollCollectorInfo();
         TollCollectorDao tollCollectorD = new TollCollectorDao();
-        tollCollector = tollCollectorD.getTollCollector(tollCollectorNo);
+        tollCollectorD.getTollCollector(tollCollectorNo,tollCollector);
         //当前系统时间
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
