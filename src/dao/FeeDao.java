@@ -79,10 +79,10 @@ public class FeeDao {
         return flag;
     }
 
-    //查找所有totalFee内容
-    public ArrayList<TotalFee> getTotalFee(){
+    //查找所有totalFee内容并把
+    public int getTotalFee(ArrayList<TotalFee> feeArrayList){
+        int total = 0;
         dbConn = new DatabaseConn();
-        ArrayList<TotalFee> feeArrayList = new ArrayList<>();
         try {
             conn = dbConn.getConnection();
             String sql = "select * from totalFee";
@@ -90,6 +90,7 @@ public class FeeDao {
             rs = pstmt.executeQuery();
             while (rs.next())
             {
+                total++;
                 TotalFee totalFee = new TotalFee();
                 totalFee.setTime(rs.getString("time"));
                 totalFee.setTollBooshNo(rs.getString("tollBooshNo"));
@@ -112,7 +113,7 @@ public class FeeDao {
             if(conn!=null)
                 DatabaseConn.closeConn(conn);
         }
-        return feeArrayList;
+        return total;
     }
 
     //根据日前查找totalFee内容
