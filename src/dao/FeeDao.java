@@ -117,16 +117,120 @@ public class FeeDao {
     }
 
     //根据日前查找totalFee内容
-    public ArrayList<TotalFee> getTotalFeeInDay(String date) {
+    public int getTotalFeeInSelect(String date,String tollBooshNo,String tollCollectorNo,String carType,ArrayList<TotalFee> feeArrayList) {
+        int total = 0;
         dbConn = new DatabaseConn();
-        ArrayList<TotalFee> feeArrayList = new ArrayList<>();
+        boolean haveDate = !date.equals("null");
+        boolean haveTollBooshNo = !tollBooshNo.equals("null");
+        boolean haveTollCollectorNo = !tollCollectorNo.equals("null");
+        boolean haveCarType = !carType.equals("null");
         try {
             conn = dbConn.getConnection();
-            String sql = "select * from totalFee where left(time,?)=?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1,10);
-            pstmt.setString(2, date);
-            rs = pstmt.executeQuery();
+            if(haveDate&&haveTollBooshNo&&haveTollCollectorNo&&haveCarType) {
+                String sql = "select * from totalFee where left(time,?)=? and tollBooshNo=? and collectorNo=? and carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                pstmt.setString(3,tollBooshNo);
+                pstmt.setString(4,tollCollectorNo);
+                pstmt.setString(5,carType);
+                rs = pstmt.executeQuery();
+            }else if(haveDate&&haveTollBooshNo&&haveTollCollectorNo){
+                String sql = "select * from totalFee where left(time,?)=? and tollBooshNo=? and collectorNo=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                pstmt.setString(3,tollBooshNo);
+                pstmt.setString(4,tollCollectorNo);
+                rs = pstmt.executeQuery();
+            }else if(haveDate&&haveTollBooshNo&&haveCarType){
+                String sql = "select * from totalFee where left(time,?)=? and tollBooshNo=? and carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                pstmt.setString(3,tollBooshNo);
+                pstmt.setString(4,carType);
+                rs = pstmt.executeQuery();
+            }else if(haveDate&&haveTollCollectorNo&&haveCarType){
+                String sql = "select * from totalFee where left(time,?)=? and collectorNo=? and carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                pstmt.setString(3,tollCollectorNo);
+                pstmt.setString(4,carType);
+                rs = pstmt.executeQuery();
+            }else if(haveTollBooshNo&&haveTollCollectorNo&&haveCarType){
+                String sql = "select * from totalFee where tollBooshNo=? and collectorNo=? and carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,tollBooshNo);
+                pstmt.setString(2,tollCollectorNo);
+                pstmt.setString(3,carType);
+                rs = pstmt.executeQuery();
+            }else if(haveDate&&haveTollBooshNo){
+                String sql = "select * from totalFee where left(time,?)=? and tollBooshNo=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                pstmt.setString(3,tollBooshNo);
+                rs = pstmt.executeQuery();
+            }else if(haveDate&&haveTollCollectorNo){
+                String sql = "select * from totalFee where left(time,?)=? and collectorNo=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                pstmt.setString(3,tollCollectorNo);
+                rs = pstmt.executeQuery();
+            }else if (haveDate&&haveCarType){
+                String sql = "select * from totalFee where left(time,?)=? and carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                pstmt.setString(3,carType);
+                rs = pstmt.executeQuery();
+            }else if(haveTollBooshNo&&haveTollCollectorNo){
+                String sql = "select * from totalFee where tollBooshNo=? and collectorNo=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,tollBooshNo);
+                pstmt.setString(2,tollCollectorNo);
+                rs = pstmt.executeQuery();
+            }else if(haveTollBooshNo&&haveCarType){
+                String sql = "select * from totalFee where tollBooshNo=? and carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,tollBooshNo);
+                pstmt.setString(2,carType);
+                rs = pstmt.executeQuery();
+            }else if(haveTollCollectorNo&&haveCarType){
+                String sql = "select * from totalFee where collectorNo=? and carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,tollCollectorNo);
+                pstmt.setString(2,carType);
+                rs = pstmt.executeQuery();
+            }else if(haveDate){
+                String sql = "select * from totalFee where left(time,?)=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, 10);
+                pstmt.setString(2, date);
+                rs = pstmt.executeQuery();
+            }else if(haveTollBooshNo){
+                String sql = "select * from totalFee where tollBooshNo=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,tollBooshNo);
+                rs = pstmt.executeQuery();
+            }else if(haveTollCollectorNo){
+                String sql = "select * from totalFee where collectorNo=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,tollCollectorNo);
+                rs = pstmt.executeQuery();
+            }else if(haveCarType){
+                String sql = "select * from totalFee where carType=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,carType);
+                rs = pstmt.executeQuery();
+            }else {
+                String sql = "select * from totalFee";
+                pstmt = conn.prepareStatement(sql);
+                rs = pstmt.executeQuery();
+            }
             while (rs.next()) {
                 TotalFee totalFee = new TotalFee();
                 totalFee.setTime(rs.getString("time"));
@@ -137,6 +241,7 @@ public class FeeDao {
                 totalFee.setFee(rs.getFloat("fee"));
                 totalFee.setCollectorNo(rs.getString("collectorNo"));
                 feeArrayList.add(totalFee);
+                total++;
             }
             if (rs != null) {
                 rs.close();
@@ -150,6 +255,6 @@ public class FeeDao {
             if (conn != null)
                 DatabaseConn.closeConn(conn);
         }
-        return feeArrayList;
+        return total;
     }
 }

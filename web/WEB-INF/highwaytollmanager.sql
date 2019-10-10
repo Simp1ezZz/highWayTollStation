@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 10/10/2019 00:36:49
+ Date: 10/10/2019 18:35:16
 */
 
 SET NAMES utf8mb4;
@@ -53,7 +53,7 @@ CREATE TABLE `cardinfo`  (
 -- ----------------------------
 -- Records of cardinfo
 -- ----------------------------
-INSERT INTO `cardinfo` VALUES ('123', '000001', '客车(7座以下)', '皖A-12345', 'temporary', 314.99, 264.30);
+INSERT INTO `cardinfo` VALUES ('123', '000001', '客车(7座以下)', '皖A-12345', 'temporary', 182.84, 396.45);
 
 -- ----------------------------
 -- Table structure for feerateinfo
@@ -166,19 +166,17 @@ CREATE TABLE `totalfee`  (
 -- ----------------------------
 -- Records of totalfee
 -- ----------------------------
-INSERT INTO `totalfee` VALUES ('2019-10-09 23:14:19', '123', '客车(7座以下)', 26.43, '100001', '110000', '002');
-INSERT INTO `totalfee` VALUES ('2019-10-09 23:18:00', '123', '客车(7座以下)', 0.00, '100001', '110000', '002');
-INSERT INTO `totalfee` VALUES ('2019-10-08 23:18:25', '123', '客车(7座以下)', 26.43, '190001', '100000', '001');
-INSERT INTO `totalfee` VALUES ('2019-10-09 23:19:09', '123', '客车(7座以下)', 26.43, '100001', '110000', '002');
-INSERT INTO `totalfee` VALUES ('2019-10-09 23:20:59', '123', '客车(7座以下)', 0.00, '100001', '110000', '002');
-INSERT INTO `totalfee` VALUES ('2019-10-09 23:21:19', '123', '客车(7座以下)', 26.43, '100001', '110000', '002');
+INSERT INTO `totalfee` VALUES ('2019-10-10 17:44:39', '123', '客车(7座以下)', 26.43, '100001', '110000', '002');
+INSERT INTO `totalfee` VALUES ('2019-10-10 17:44:55', '123', '客车(7座以下)', 26.43, '190001', '100000', '001');
 
 -- ----------------------------
 -- Table structure for trafficinfo
 -- ----------------------------
 DROP TABLE IF EXISTS `trafficinfo`;
 CREATE TABLE `trafficinfo`  (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
   `cardNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `carType` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `startTollBooshNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `startLaneNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `startTime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -186,32 +184,15 @@ CREATE TABLE `trafficinfo`  (
   `endLaneNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `endTime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `mileage` float(32, 1) NULL DEFAULT NULL,
-  `totalFee` float(32, 2) NULL DEFAULT NULL
+  `totalFee` float(32, 2) NULL DEFAULT NULL,
+  PRIMARY KEY (`uid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of trafficinfo
 -- ----------------------------
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 21:37:43', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 21:38:3', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 21:44:10', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 21:44:30', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 21:50:11', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 21:50:27', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 22:0:22', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 22:14:50', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 22:15:18', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/8 22:15:35', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019/10/8 22:15:55', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/9 17:49:17', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/9 18:27:29', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019/10/9 22:5:54', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019-10-09 23:09:13', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019-10-09 23:17:52', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019-10-09 23:18:17', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019-10-09 23:18:58', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '110000', '002', '2019-10-09 23:20:54', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
-INSERT INTO `trafficinfo` VALUES ('123', '100000', '001', '2019-10-09 23:21:08', '110000', '002', '2019-10-09 23:21:19', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES (29, '123', '客车(7座以下)', '100000', '001', '2019-10-10 17:44:01', '100000', '001', '2019-10-10 17:44:55', 75.5, 26.43);
+INSERT INTO `trafficinfo` VALUES (30, '123', '客车(7座以下)', '110000', '002', '2019-10-10 17:44:43', '100000', '001', '2019-10-10 17:44:55', 75.5, 26.43);
 
 -- ----------------------------
 -- Table structure for trafficvolume
@@ -229,14 +210,14 @@ CREATE TABLE `trafficvolume`  (
 -- Records of trafficvolume
 -- ----------------------------
 INSERT INTO `trafficvolume` VALUES ('100000', '001', '客车(7座以下)', 1);
-INSERT INTO `trafficvolume` VALUES ('110000', '002', '客车(7座以下)', 3);
+INSERT INTO `trafficvolume` VALUES ('110000', '002', '客车(7座以下)', 1);
 
 -- ----------------------------
 -- Table structure for worklog
 -- ----------------------------
 DROP TABLE IF EXISTS `worklog`;
 CREATE TABLE `worklog`  (
-  `workLogNo` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `workLogNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tollCollectorNo` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `startWorkTime` datetime(0) NULL DEFAULT NULL,
   `finishWorkTime` datetime(0) NULL DEFAULT NULL,
@@ -247,14 +228,14 @@ CREATE TABLE `worklog`  (
 -- ----------------------------
 -- Records of worklog
 -- ----------------------------
-INSERT INTO `worklog` VALUES (0000000001, '100001', '2019-09-01 15:31:39', '2019-09-28 15:31:51', '100000');
-INSERT INTO `worklog` VALUES (0000000002, '190001', '2019-09-30 17:20:33', '2019-09-30 22:20:39', '100000');
-INSERT INTO `worklog` VALUES (0000000003, '100001', '2019-09-30 17:21:25', '2019-09-30 20:21:28', '100000');
-INSERT INTO `worklog` VALUES (0000000004, '100001', '2019-09-30 17:30:54', '2019-09-30 22:30:57', '100000');
-INSERT INTO `worklog` VALUES (0000000005, '190001', '2019-10-07 13:37:08', '2019-10-07 13:37:10', '100000');
-INSERT INTO `worklog` VALUES (0000000006, '190001', '2019-10-07 22:17:06', '2019-10-07 22:17:07', '100000');
-INSERT INTO `worklog` VALUES (0000000007, '190001', '2019-10-08 00:13:40', '2019-10-08 00:13:43', '100000');
-INSERT INTO `worklog` VALUES (0000000008, '100001', '2019-10-08 17:02:14', '2019-10-08 21:25:52', '110000');
-INSERT INTO `worklog` VALUES (0000000009, '190001', '2019-10-09 15:55:23', '2019-10-09 15:55:30', '100000');
+INSERT INTO `worklog` VALUES (13, '190001', '2019-10-10 17:22:05', '2019-10-10 17:23:12', '100000');
+INSERT INTO `worklog` VALUES (14, '190001', '2019-10-10 17:23:18', '2019-10-10 17:23:23', '100000');
+INSERT INTO `worklog` VALUES (15, '190001', '2019-10-10 17:23:35', '2019-10-10 17:24:05', '100000');
+INSERT INTO `worklog` VALUES (16, '190001', '2019-10-10 17:24:55', '2019-10-10 17:27:47', '100000');
+INSERT INTO `worklog` VALUES (17, '190001', '2019-10-10 17:27:49', '2019-10-10 17:28:29', '100000');
+INSERT INTO `worklog` VALUES (18, '100001', '2019-10-10 17:28:04', '2019-10-10 17:33:20', '110000');
+INSERT INTO `worklog` VALUES (19, '100001', '2019-10-10 17:33:22', '2019-10-10 17:33:23', '110000');
+INSERT INTO `worklog` VALUES (20, '190001', '2019-10-10 17:33:35', '2019-10-10 17:33:37', '100000');
+INSERT INTO `worklog` VALUES (21, '190001', '2019-10-10 17:33:41', '2019-10-10 17:33:43', '100000');
 
 SET FOREIGN_KEY_CHECKS = 1;

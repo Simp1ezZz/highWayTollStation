@@ -1,7 +1,9 @@
 package servlet;
 
+import bean.CardInfo;
 import bean.TrafficInfo;
 import com.mysql.cj.xdevapi.JsonArray;
+import dao.CardDao;
 import dao.InOutSiteDao;
 import net.sf.json.JSONObject;
 
@@ -27,10 +29,14 @@ public class InSiteServlet extends HttpServlet {
         InOutSiteDao inOutSiteDao = new InOutSiteDao();
         JSONObject json = new JSONObject();
         TrafficInfo traffic = new TrafficInfo();
+        CardInfo cardInfo = new CardInfo();
+        CardDao cardDao = new CardDao();
+        cardDao.getCardInfo(cardInfo,cardNo);
         traffic.setCardNo(cardNo);
         traffic.setStartTollBooshNo(startTollBooshNo);
         traffic.setStartLaneNo(startLaneNo);
         traffic.setStartTime(startTime);
+        traffic.setCarType(cardInfo.getCarType());
         if(inOutSiteDao.inSite(traffic)){
             json.put("msg","提交成功!");
             out.print(json.toString());

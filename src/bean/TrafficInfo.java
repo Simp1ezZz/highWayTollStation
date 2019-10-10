@@ -10,6 +10,7 @@ public class TrafficInfo {
     private String cardNo;                  //行车卡编号
     private float mileage;                  //里程数
     private float totalFee;                 //行程费用
+    private String carType;                 //车型
 
     public String getStartLaneNo() {
         return startLaneNo;
@@ -81,5 +82,13 @@ public class TrafficInfo {
 
     public void setTotalFee(float totalFee) {
         this.totalFee = totalFee;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 }

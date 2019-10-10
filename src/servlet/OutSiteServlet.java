@@ -45,6 +45,7 @@ public class OutSiteServlet extends HttpServlet {
         traffic.setEndTollBooshNo(endTollBooshNo);
         traffic.setEndTime(endTime);
         traffic.setEndLaneNo(laneNo);
+        traffic.setCarType(card.getCarType());
         //路段信息获取
         RoadInfo road = new RoadInfo();
         RoadDao roadDao = new RoadDao();

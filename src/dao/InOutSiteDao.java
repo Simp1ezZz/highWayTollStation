@@ -21,12 +21,13 @@ public class InOutSiteDao {
         if(isOutSite(traffic.getCardNo())) {
             try {
                 conn = dbConn.getConnection();
-                String sql = "insert into trafficInfo(cardNo,startTollBooshNo,startLaneNo,startTime) values(?,?,?,?)";
+                String sql = "insert into trafficInfo(cardNo,startTollBooshNo,startLaneNo,startTime,carType) values(?,?,?,?,?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, traffic.getCardNo());
                 pstmt.setString(2, traffic.getStartTollBooshNo());
                 pstmt.setString(3, traffic.getStartLaneNo());
                 pstmt.setString(4, traffic.getStartTime());
+                pstmt.setString(5,traffic.getCarType());
                 int i = pstmt.executeUpdate();
                 if (i > 0) {
                     flag = true;
@@ -103,14 +104,15 @@ public class InOutSiteDao {
         if(isInSite(traffic.getCardNo())&&!isOutSite(traffic.getCardNo())) { //是否可以写入
             try {
                 conn = dbConn.getConnection();
-                String sql = "UPDATE trafficinfo SET endTollBooshNo=?,endLaneNo=?,endTime=?,mileage=?,totalFee=? where cardNo=?";
+                String sql = "UPDATE trafficinfo SET endTollBooshNo=?,endLaneNo=?,endTime=?,mileage=?,totalFee=?,carType=? where cardNo=?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, traffic.getEndTollBooshNo());
                 pstmt.setString(2,traffic.getEndLaneNo());
                 pstmt.setString(3, traffic.getEndTime());
                 pstmt.setFloat(4, traffic.getMileage());
                 pstmt.setFloat(5, traffic.getTotalFee());
-                pstmt.setString(6, traffic.getCardNo());
+                pstmt.setString(6,traffic.getCarType());
+                pstmt.setString(7, traffic.getCardNo());
                 int i = pstmt.executeUpdate();
                 if (i > 0) {
                     flag = true;

@@ -97,7 +97,7 @@
         </div>
         <div title="报表管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="jsp/page01.html">通行流量表</a></li>
+                <li><a href="#" data-url="jsp/trafficVolumeTable.jsp">通行流量表</a></li>
                 <li><a href="#" data-url="jsp/accountFlowTable.jsp">账目流水表</a></li>
             </ul>
         </div>
