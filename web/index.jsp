@@ -90,30 +90,26 @@
     <div class="easyui-accordion" fit="true" id="navmenu">
         <div title="车道收费">
             <ul class="navmenu">
-                <li><a href="#" data-url="jsp/startOrFinishWork.jsp">上下班</a></li>
-                <li><a href="#" data-url="jsp/inSite.jsp">车辆进站</a></li>
-                <li><a href="#" data-url="jsp/outSite.jsp">收费出站</a></li>
+                <li><a href="#" data-url="startOrFinishWork.html">上下班</a></li>
+                <li><a href="#" data-url="inSite.html">车辆进站</a></li>
+                <li><a href="#" data-url="outSite.html">收费出站</a></li>
             </ul>
         </div>
         <div title="报表管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="jsp/trafficVolumeTable.jsp">通行流量表</a></li>
-                <li><a href="#" data-url="jsp/accountFlowTable.jsp">账目流水表</a></li>
+                <li><a href="#" data-url="trafficVolumeTable.html">通行流量表</a></li>
+                <li><a href="#" data-url="accountFlowTable.html">账目流水表</a></li>
             </ul>
         </div>
         <div title="行车卡管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="jsp/cardLogin.jsp">办理行车卡</a></li>
-                <li><a href="#" data-url="html/page01.html">注销行车卡</a></li>
-                <li><a href="#" data-url="jsp/recharge.jsp">行车卡充值</a></li>
-                <li><a href="#" data-url="html/page02.html">查询卡信息</a></li>
+                <li><a href="#" data-url="cardHandle.html">办理行车卡</a></li>
+                <li><a href="#" data-url="recharge.html">行车卡充值</a></li>
             </ul>
         </div>
-        <div title="结算中心">
+        <div title="费率管理">
             <ul class="navmenu">
-                <li><a href="#" data-url="html/page01.html">查看费率</a></li>
-                <li><a href="#" data-url="html/page01.html">修改费率</a></li>
-                <li><a href="#" data-url="html/page02.html">拆分账目</a></li>
+                <li><a href="#" data-url="feeRate.html">查看修改费率</a></li>
             </ul>
         </div>
     </div>

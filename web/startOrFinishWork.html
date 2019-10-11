@@ -1,12 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!-- 组织机构管理 -->
 <div class="easyui-layout" data-options="fit:true">
     <div class="inner-header" data-options="region:'north'">
         <a href="#" class="easyui-linkbutton" iconCls="icon-back" onclick="startWorkSubmit()">打卡上班</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="finishWorkSubmit()">打卡下班</a>
     </div>
     <div class="inner-content" data-options="region:'center'">
-        <!-- 数据表 -->
         <table id="dg" class="easyui-datagrid" title="出勤状况" fit="true"
                data-options="fitColumns:true,url:'WorkLogPrintServlet',rownumbers:true,
                pagination:true" toolbar="#toolbar2" striped="true" remoteSort="false" nowrap="false">
@@ -24,8 +21,6 @@
 <script type="text/javascript">
     function startWorkSubmit() {
         var data = $('#dg').datagrid('getData');
-
-        var user = <%=session.getAttribute("user")%>;
         for(var i=data.total-1;i>=0;i--){
             if(user=data.rows[i].tollCollectorNo && data.rows[i].finishWorkTime==null) {
                 $.messager.alert('请勿重复点击打卡！', '确保你之前的下班打卡已经完成！');
@@ -43,10 +38,8 @@
 
     function finishWorkSubmit() {
         var data = $('#dg').datagrid('getData');
-
-        var user = <%=session.getAttribute("user")%>;
         for(var i=data.total-1;i>=0;i--){
-            if(user=data.rows[i].tollCollectorNo && data.rows[i].finishWorkTime==null) {
+            if(user==data.rows[i].tollCollectorNo && data.rows[i].finishWorkTime==null) {
                 $.ajax({
                     url: "FinishWorkServlet",
                     type: "POST",

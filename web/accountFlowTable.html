@@ -1,25 +1,34 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <div class="easyui-layout" data-options="fit:true">
     <div style="padding-left: 3%;padding-top: 2%">
-        <input value="输入要查询的日期(默认全部日期)：" readonly unselectable="on"
+        <input value="输入要查询的日期(默认全部日期)：" readonly unselectable="on" tabindex=-1
                style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 300px">
-        <input id="date2" type="text" class="easyui-datebox" required="required" data-options="required: false">
+        <input id="date2" type="text" class="easyui-datebox" required="required" data-options="required: false" style="width: 185px">
     </div>
     <div style="padding-left: 3%;padding-top: 1%">
-        <input value="输入要查询的收费站编号(默认全部收费站)：" readonly unselectable="on"
+        <input value="输入要查询的收费站编号(默认全部收费站)：" readonly unselectable="on" tabindex=-1
                style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 300px">
-        <div class="easyui-textbox" id="tollBooshNo2"></div>
+        <div class="easyui-textbox" id="tollBooshNo2" style="width: 185px"></div>
     </div>
     <div style="padding-left: 3%;padding-top: 1%">
-        <input value="输入要查询的收费员编号(默认全部收费员)：" readonly unselectable="on"
+        <input value="输入要查询的收费员编号(默认全部收费员)：" readonly unselectable="on" tabindex=-1
                style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 300px">
-        <div class="easyui-textbox" id="tollCollectorNo2"></div>
+        <div class="easyui-textbox" id="tollCollectorNo2" style="width: 185px"></div>
     </div>
     <div style="padding-left: 3%;padding-top: 1%">
-        <input value="输入要查询的车型(默认全部车型)：" readonly unselectable="on"
+        <input value="输入要查询的车型(默认全部车型)：" readonly unselectable="on" tabindex=-1
                style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 300px">
-        <div class="easyui-textbox" id="carType2"></div>
+        <select id="carType2" class="easyui-combobox" style="width: 185px">
+            <option></option>
+            <option value="客车(7座以下)">客车(7座及以下)</option>
+            <option value="客车(8-19座)">客车(8-19座)</option>
+            <option value="客车(20-39座)">客车(20-39座)</option>
+            <option value="客车(40座以上)">客车(40座及以上)</option>
+            <option value="货车(2吨以下)">货车(2吨及以下)</option>
+            <option value="货车(2-5吨(含5吨))">货车(2-5吨(含5吨))</option>
+            <option value="货车(5-10吨(含10吨))">货车(5-10吨(含10吨))</option>
+            <option value="货车(10-20吨(含20吨))">货车(10-20吨(含20吨))</option>
+            <option value="货车(20吨以上)">货车(20吨以上)</option>
+        </select>
     </div>
     <div style="padding-left: 6%;padding-top: 1%;padding-bottom: 10px">
         <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="showAll2()">查看全部</a>
@@ -50,7 +59,7 @@
             var date=$("#date2").datebox("getValue");
             var tollBooshNo = $("#tollBooshNo2").val();
             var tollCollectorNo = $("#tollCollectorNo2").val();
-            var carType = $("#carType2").val();
+            var carType = $("#carType2").combobox('getValue').replace(/\s*/g,"");
             $("#dg2").datagrid("options").url='ShowAccountFlowServlet';
             var queryParams = $('#dg2').datagrid('options').queryParams;
             if(date.length!=0)

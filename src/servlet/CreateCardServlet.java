@@ -28,7 +28,7 @@ public class CreateCardServlet extends HttpServlet {
 
         String carType = request.getParameter("carType");
         String numberPlate = request.getParameter("numberPlate");
-        String balanceS = request.getParameter("balance");
+        String balanceS = request.getParameter("rechargeAmount");
         float balance = Float.parseFloat(balanceS);
         String phone = request.getParameter("phone");
         String name = request.getParameter("name");
@@ -50,6 +50,24 @@ public class CreateCardServlet extends HttpServlet {
         TollCollectorInfo tollCollectorInfo = new TollCollectorInfo();
         TollCollectorDao tollCollectorDao = new TollCollectorDao();
         tollCollectorDao.getTollCollector(tollCollectorNo,tollCollectorInfo);
+
+        cardInfo.setUsedFee(0);
+        cardInfo.setBalance(balance);
+        cardInfo.setCardIssueTollBooshNo(tollCollectorInfo.getTollBoothNo());
+        cardInfo.setCardIssueTollCollectorNo(tollCollectorNo);
+        cardInfo.setCardNo(cardDao.getInsertCardNo());
+        cardInfo.setCarType(carType);
+        cardInfo.setNumberPlate(numberPlate);
+        cardInfo.setName(name);
+        cardInfo.setPhone(phone);
+        cardInfo.setTime(time);
+        if(cardDao.createCard(cardInfo)){
+            jsonObject.put("msg","办理成功！");
+            out.print(jsonObject.toString());
+        }else {
+            jsonObject.put("msg", "办理失败！");
+            out.print(jsonObject.toString());
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

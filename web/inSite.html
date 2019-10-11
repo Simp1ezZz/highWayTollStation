@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
     .text{
         font-size: 20px;
@@ -11,27 +10,29 @@
     }
 </style>
 <div>
-    <input class="text" value="入口车道：" readonly unselectable="on">
-    <input class="text" id="tollBooshName" readonly unselectable="on">
-    <input class="text" id="laneName" readonly unselectable="on">
+    <input class="text" value="入口车道：" readonly unselectable="on" tabindex=-1>
+    <input class="text" id="tollBooshName" readonly unselectable="on" tabindex=-1>
+    <input class="text" id="laneName" readonly unselectable="on" tabindex=-1>
 </div>
 <div>
-    <input class="text" value="当前时间：" readonly unselectable="on">
+    <input class="text" value="当前时间：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="startTime" readonly unselectable="on">
 </div>
 
 <div style="margin-bottom: 30px">
-    <input class="text" value="IC卡号：" readonly unselectable="on">
+    <input class="text" value="IC卡号：" readonly unselectable="on" tabindex=-1>
     <input style="font-size: 20px" id="cardNo1" onkeyup="query1()">
+    <input value="IC卡号不正确" id="vaildata1" readonly unselectable="on" tabindex=-1
+           style="font-size: 16px;color:red ;border: none;outline: none" type="hidden">
 
 </div>
 <div>
-    <input class="text" value="车型：" readonly unselectable="on">
+    <input class="text" value="车型：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="carType1" readonly unselectable="on">
 
 </div>
 <div style="margin-bottom: 25px">
-    <input class="text" value="车牌号：" readonly unselectable="on">
+    <input class="text" value="车牌号：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="numberPlate1" readonly unselectable="on">
 
 </div>
@@ -49,6 +50,7 @@
          document.getElementById("carType1").value ='';
          document.getElementById("numberPlate1").value ='';
          var cardNo = $("#cardNo1").val();
+         $("#vaildata1").attr("type","hidden");
          if(cardNo!=null){
              $.ajax({
                  url:"ShowSiteInfoServlet",
@@ -62,7 +64,8 @@
                      if(data.carType!=null) {
                          document.getElementById("carType1").value = data.carType;
                          document.getElementById("numberPlate1").value = data.numberPlate;
-
+                     }else {
+                         $("#vaildata1").attr("type","text");
                      }
                  }
              })

@@ -1,51 +1,52 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
     .text{
-        font-size: 18px;
+        font-size: 20px;
         border: 0px;
         outline: none;
         text-align: center;
-        width:200px;
-        padding: 30px 0 0 0;
+        width:250px;
+        padding: 50px 0 0 0;
+        margin-right: 30px;
     }
 </style>
 <div>
-    <input class="text" value="出口车道：" readonly unselectable="on">
+    <input class="text" value="出口车道：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="outTollBooshName" readonly unselectable="on">
     <input class="text" id="outLaneName" readonly unselectable="on">
-    <input id="tollBooshNo" readonly unselectable="on" type="hidden">
-    <input id="laneNo" readonly unselectable="on" type="hidden">
+    <input id="tollBooshNo" readonly unselectable="on" type="hidden" tabindex=-1>
+    <input id="laneNo" readonly unselectable="on" type="hidden" tabindex=-1>
 </div>
 <div>
-    <input class="text" value="当前时间：" readonly unselectable="on">
+    <input class="text" value="当前时间：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="endTime" readonly unselectable="on">
 </div>
 
 <div>
-    <input class="text" value="IC卡号：" readonly unselectable="on">
+    <input class="text" value="IC卡号：" readonly unselectable="on" tabindex=-1>
     <input style="font-size: 20px" id="cardNo2" onkeyup="query2()">
-
+    <input value="IC卡号不正确" id="vaildata3" readonly unselectable="on" tabindex=-1
+           style="font-size: 16px;color:red ;border: none;outline: none" type="hidden">
 </div>
 <div>
-    <input class="text" value="车型：" readonly unselectable="on">
+    <input class="text" value="车型：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="carType2" readonly unselectable="on">
 
 </div>
 <div>
-    <input class="text" value="车牌号：" readonly unselectable="on">
+    <input class="text" value="车牌号：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="numberPlate2" readonly unselectable="on">
 </div>
 <div>
-    <input class="text" value="进站车道：" readonly unselectable="on">
+    <input class="text" value="进站车道：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="startTollBooshName" readonly unselectable="on">
     <input class="text" id="startLaneName" readonly unselectable="on">
 </div>
 <div>
-    <input class="text" value="里程数：" readonly unselectabel="on">
+    <input class="text" value="里程数：" readonly unselectabel="on" tabindex=-1>
     <input class="text" id="mile" readonly unselectable="on">
 </div>
 <div>
-    <input class="text" value="通行费用：" readonly unselectable="on">
+    <input class="text" value="通行费用：" readonly unselectable="on" tabindex=-1>
     <input class="text" id="totalFee" readonly unselectable="on">
 </div>
 <div style="padding-left: 200px;padding-top: 50px">
@@ -61,6 +62,7 @@
         document.getElementById("totalFee").value= '';
         document.getElementById("startTollBooshName").value='';
         document.getElementById("startLaneName").value='';
+        $("#vaildata3").attr("type","hidden");
         var cardNo = $("#cardNo2").val();
         if(cardNo!=null){
             $.ajax({
@@ -76,6 +78,8 @@
                         document.getElementById("carType2").value = data.carType;
                         document.getElementById("numberPlate2").value = data.numberPlate;
                         showMileAndFee();
+                    }else {
+                        $("#vaildata3").attr("type","text");
                     }
                 }
             })

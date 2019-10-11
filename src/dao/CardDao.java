@@ -135,4 +135,36 @@ public class CardDao {
         }
         return flag;
     }
+
+    //获取新建的卡号
+    public String getInsertCardNo(){
+        String cardNo = null;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "select cardNo from cardinfo where uid=(select MAX(uid) from cardinfo)";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+            {
+                cardNo = rs.getString("cardNo");
+                int cardNo_Int = Integer.parseInt(cardNo);
+                cardNo_Int = cardNo_Int+1;
+                cardNo = Integer.toString(cardNo_Int);
+            }
+            if(rs!=null) {
+                rs.close();
+            }
+            if(pstmt!=null) {
+                pstmt.close();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(conn!=null)
+                DatabaseConn.closeConn(conn);
+        }
+
+        return cardNo;
+    }
 }

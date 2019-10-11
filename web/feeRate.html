@@ -1,0 +1,74 @@
+<style>
+    .myInput{
+        font-size: 16px;
+        height: 30px;
+        border-color: rgb(149,184,231);
+        border-radius: 5px 5px 5px 5px;
+        outline: none;
+        border: 1px solid rgb(149,184,231);
+    }
+</style>
+<div class="easyui-layout" data-options="fit:true">
+    <div style="padding-left: 3%;padding-top: 2%">
+        <input value="输入要修改费率的路段编号：" readonly unselectable="on" tabindex=-1
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 200px">
+        <input class="myInput" autocomplete="off" id="roadNo" onkeyup="queryFeeRate()">
+    </div>
+    <div style="padding-left: 3%;padding-top: 2%">
+        <input value="输入修改后的费率：" readonly unselectable="on" tabindex=-1
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 200px">
+        <input style="font-size: 16px" class="easyui-numberbox" data-options="min:0,precision:2" id="feeRate">
+    </div>
+    <div style="padding-left: 13%;padding-bottom: 10px">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="feeRateSubmit()" >确认提交</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="showAllFeeRate()">查看全部</a>
+    </div>
+    <div style="width:auto;height:70%">
+        <table id="feeRateDatagrid" class="easyui-datagrid" fit="true" data-options="url:'FeeRatePrintServlet',rownumbers:true,
+                   pagination:true,showFooter: true" toolbar="#toolbar2" striped="true" remoteSort="false" nowrap="false">
+            <thead>
+            <tr>
+                <th field="roadNo_feeRate" width="33.3%" align="center" sortable="true">路段编号</th>
+                <th field="carType_feeRate" width="33.3%" align="center" sortable="true">车型</th>
+                <th field="feeRate_feeRate" width="33.3%" align="center" sortable="true">费率</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<script>
+    function queryFeeRate() {
+        var roadNo = $("#roadNo").val();
+        var queryParams = $('#feeRateDatagrid').datagrid('options').queryParams;
+        queryParams.roadNo = roadNo;
+        $("#feeRateDatagrid").datagrid('reload');
+    }
+    function feeRateSubmit() {
+        var roadNo = $("#roadNo").val();
+        var feeRate = $("#feeRate").val();
+        if(roadNo==null){
+            $.messager.alert("警告","请输入正确的路段编号！");
+        }else{
+            $.ajax({
+                url: "ChangeFeeRateServlet",
+                type: "POST",
+                async: false,
+                data: {
+                    roadNo: roadNo.replace(/\s*/g,""),
+                    feeRate:feeRate
+                },
+                success: function (json) {
+                    var result = eval('(' + json + ')');
+                    $.messager.alert('提示', result.msg);
+                    setTimeout($("#feeRateDatagrid").datagrid('reload'),200);
+                }
+            })
+        }
+    }
+    function showAllFeeRate() {
+        var roadNo;
+        var queryParams = $('#feeRateDatagrid').datagrid('options').queryParams;
+        queryParams.roadNo = roadNo;
+        $("#feeRateDatagrid").datagrid('reload');
+    }
+</script>
