@@ -28,11 +28,13 @@ public class CardDao {
                 flag = true;
                 card.setCardNo(rs.getString("cardNo"));
                 card.setNumberPlate(rs.getString("numberPlate"));
-                card.setCardType(rs.getString("cardType"));
                 card.setCarType(rs.getString("carType"));
-                card.setDrivingRecordNo(rs.getString("drivingRecordNo"));
+                card.setCardIssueTollBooshNo(rs.getString("cardIssueTollBooshNo"));
+                card.setCardIssueTollCollectorNo(rs.getString("cardIssueTollCollectorNo"));
                 card.setBalance(rs.getFloat("balance"));
                 card.setUsedFee(rs.getFloat("usedFee"));
+                card.setPhone(rs.getString("phone"));
+                card.setName(rs.getString("name"));
             }
             if(rs!=null) {
                 rs.close();
@@ -76,4 +78,61 @@ public class CardDao {
         return flag;
     }
 
+    //行车卡充值
+    public boolean recharge(CardInfo cardInfo){
+        boolean flag = false;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "UPDATE cardInfo SET balance=? where cardNo=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setFloat(1, cardInfo.getBalance());
+            pstmt.setString(2, cardInfo.getCardNo());
+            int i = pstmt.executeUpdate();
+            if (i > 0) {
+                flag = true;
+            }
+            if (pstmt != null)
+                pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                DatabaseConn.closeConn(conn);
+        }
+        return flag;
+    }
+
+    //新建行车卡
+    public boolean createCard(CardInfo cardInfo){
+        boolean flag = false;
+        dbConn = new DatabaseConn();
+        try {
+            conn = dbConn.getConnection();
+            String sql = "insert into cardInfo(cardNo,carType,numberPlate,cardIssueTollBooshNo,cardIssueTollCollectorNo,phone,name,balance,usedFee,time) values(?,?,?,?,?,?,?,?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, cardInfo.getCardNo());
+            pstmt.setString(2, cardInfo.getCarType());
+            pstmt.setString(3, cardInfo.getNumberPlate());
+            pstmt.setString(4, cardInfo.getCardIssueTollBooshNo());
+            pstmt.setString(5, cardInfo.getCardIssueTollCollectorNo());
+            pstmt.setString(6, cardInfo.getPhone());
+            pstmt.setString(7, cardInfo.getName());
+            pstmt.setFloat(8, cardInfo.getBalance());
+            pstmt.setFloat(9,cardInfo.getUsedFee());
+            pstmt.setString(10,cardInfo.getTime());
+            int i = pstmt.executeUpdate();
+            if (i > 0) {
+                flag = true;
+            }
+            if (pstmt != null)
+                pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                DatabaseConn.closeConn(conn);
+        }
+        return flag;
+    }
 }

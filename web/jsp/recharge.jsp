@@ -1,0 +1,79 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div class="easyui-layout" data-options="fit:true">
+    <div style="padding-left: 3%;padding-top: 2%">
+        <input value="输入要查询的卡号：" readonly unselectable="on"
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 200px">
+        <input style="font-size: 20px;width: 200px" id="cardNo" onkeyup="showCardInfo()">
+        <input value="IC卡号不正确" id="vailde" readonly unselectable="on"
+               style="font-size: 16px;color:red ;border: none;outline: none;margin-bottom: 40px;width: 200px" type="hidden">
+    </div>
+    <div style="padding-left: 3%;padding-top: 1%">
+        <input value="车牌号：" readonly unselectable="on"
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 200px">
+        <input readonly id="numberPlate" unselectable="on"
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: auto">
+    </div>
+    <div style="padding-left: 3%;padding-top: 1%">
+        <input value="余额：" readonly unselectable="on"
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 200px">
+        <input readonly id="balance" unselectable="on"
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: auto">
+    </div>
+    <div style="padding-left: 3%;padding-top: 1%">
+        <input value="充值金额：" readonly unselectable="on"
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 200px">
+        <input type="text" id="rechargeAmount" class="easyui-numberbox" data-options="min:0,precision:1">
+    </div>
+    <div style="padding-left: 200px;padding-top: 1%;padding-bottom: 10px">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="rechargeSubmit()">确认充值</a>
+    </div>
+</div>
+
+<script>
+    function rechargeSubmit() {
+        var cardNo = $("#cardNo").val();
+        var rechargeAmount = $("#rechargeAmount").val();
+        var numberPlate = $("#numberPlate").val();
+        if(numberPlate==""){
+            $.messager.alert('提示', "请输入正确的IC卡号！");
+        }else {
+            $.ajax({
+                url: "CardRechargeServlet",
+                type: "POST",
+                data: {
+                    cardNo: cardNo.replace(/(^\s*)|(\s*$)/g, ''),
+                    rechargeAmount: rechargeAmount
+                },
+                success: function (info) {
+                    var data = eval('(' + info + ')');
+                    $.messager.alert('提示', data.msg);
+                    setTimeout(showCardInfo(),200);
+                }
+            })
+        }
+    }
+    function showCardInfo() {
+        var cardNo = $("#cardNo").val();
+        document.getElementById("numberPlate").value = "";
+        document.getElementById("balance").value = "";
+        $("#vailde").attr("type","hidden");
+        $.ajax({
+            url:"ShowCardInfoServlet",
+            type:"POST",
+            async:false,
+            data:{
+                cardNo:cardNo.replace(/(^\s*)|(\s*$)/g, '')
+            },
+            success:function (result) {
+                var data = eval('('+result+')');
+                if(data.numberPlate!=null) {
+                    document.getElementById("numberPlate").value = data.numberPlate;
+                    document.getElementById("balance").value = data.balance;
+                }else {
+                    $("#vailde").attr("type","text");
+                }
+            }
+        })
+    }
+    
+</script>

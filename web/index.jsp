@@ -105,7 +105,7 @@
             <ul class="navmenu">
                 <li><a href="#" data-url="jsp/cardLogin.jsp">办理行车卡</a></li>
                 <li><a href="#" data-url="html/page01.html">注销行车卡</a></li>
-                <li><a href="#" data-url="html/page02.html">行车卡充值</a></li>
+                <li><a href="#" data-url="jsp/recharge.jsp">行车卡充值</a></li>
                 <li><a href="#" data-url="html/page02.html">查询卡信息</a></li>
             </ul>
         </div>
