@@ -2,7 +2,6 @@ package servlet;
 
 import bean.CardInfo;
 import bean.TrafficInfo;
-import com.mysql.cj.xdevapi.JsonArray;
 import dao.CardDao;
 import dao.InOutSiteDao;
 import net.sf.json.JSONObject;

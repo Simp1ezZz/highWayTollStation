@@ -1,0 +1,84 @@
+<div class="easyui-layout" data-options="fit:true">
+    <div style="padding-left: 3%;padding-top: 2%">
+        <input value="输入要查询的日期(默认全部日期)：" readonly unselectable="on" tabindex=-1
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 300px">
+        <input id="date1" type="text" class="easyui-datebox" required="required" data-options="required: false" style="width: 185px">
+    </div>
+    <div style="padding-left: 3%;padding-top: 1%">
+        <input value="输入要查询的收费站编号(默认全部收费站)：" readonly unselectable="on" tabindex=-1
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 300px">
+        <div class="easyui-textbox" id="tollBooshNo1" style="width: 185px"></div>
+    </div>
+    <div style="padding-left: 3%;padding-top: 1%">
+        <input value="选择要查询的车型(默认全部车型)：" readonly unselectable="on" tabindex=-1
+               style="font-size: 16px;border: none;outline: none;margin-bottom: 40px;width: 300px">
+        <select id="carType1" class="easyui-combobox" style="width: 185px">
+            <option></option>
+            <option value="客车(7座以下)">客车(7座及以下)</option>
+            <option value="客车(8-19座)">客车(8-19座)</option>
+            <option value="客车(20-39座)">客车(20-39座)</option>
+            <option value="客车(40座以上)">客车(40座及以上)</option>
+            <option value="货车(2吨以下)">货车(2吨及以下)</option>
+            <option value="货车(2-5吨(含5吨))">货车(2-5吨(含5吨))</option>
+            <option value="货车(5-10吨(含10吨))">货车(5-10吨(含10吨))</option>
+            <option value="货车(10-20吨(含20吨))">货车(10-20吨(含20吨))</option>
+            <option value="货车(20吨以上)">货车(20吨以上)</option>
+        </select>
+    </div>
+    <div style="padding-left: 6%;padding-top: 1%;padding-bottom: 10px">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="showAll1()">查看全部</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="querySelect1()">查询所选</a>
+    </div>
+    <div style="width:auto;height:60%">
+        <table id="dg1" class="easyui-datagrid" fit="true" data-options="rownumbers:true,
+                   pagination:true,showFooter: true" toolbar="#toolbar2" striped="true" remoteSort="false" nowrap="false">
+            <thead>
+            <tr>
+                <th field="time1" width="16.66%" align="center" sortable="true">入站时间</th>
+                <th field="tollBooshNo1" width="16.66%" align="center" sortable="true">收费站编号</th>
+                <th field="tollBooshName1" width="16.66%" align="center" sortable="true">收费站名称</th>
+                <th field="laneName1" width="16.66%" align="center" sortable="true">收费车道名称</th>
+                <th field="cardNo1" width="16.66%" align="center" sortable="true">IC卡编号</th>
+                <th field="carType1" width="16.66%" align="center" sortable="true">车型</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<script>
+    function querySelect1() {
+        setTimeout(function submit1() {
+            var date=$("#date1").datebox("getValue");
+            var tollBooshNo = $("#tollBooshNo1").val();
+            var carType = $("#carType1").combobox('getValue').replace(/\s*/g,"");
+            $("#dg1").datagrid("options").url='ShowTrafficVolumeServlet';
+            var queryParams = $('#dg1').datagrid('options').queryParams;
+            if(date.length!=0)
+                queryParams.date1 = date;
+            else
+                queryParams.date1 = "null";
+            if(tollBooshNo.length!=0)
+                queryParams.tollBooshNo1 = tollBooshNo;
+            else
+                queryParams.tollBooshNo1 = "null";
+            if(carType.length!=0)
+                queryParams.carType1 = carType;
+            else
+                queryParams.carType1 = "null";
+            $("#dg1").datagrid("reload");
+        },200);
+    }
+    function showAll1() {
+        setTimeout(function submit1() {
+            var date="null";
+            var tollBooshNo="null";
+            var carType="null";
+            $("#dg1").datagrid("options").url='ShowTrafficVolumeServlet';
+            var queryParams = $('#dg1').datagrid('options').queryParams;
+            queryParams.date1 = date;
+            queryParams.tollBooshNo1=tollBooshNo;
+            queryParams.carType1=carType;
+            $("#dg1").datagrid("reload");
+        },200);
+    }
+</script>
