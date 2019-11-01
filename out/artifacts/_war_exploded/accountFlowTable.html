@@ -59,7 +59,7 @@
             var date=$("#date2").datebox("getValue");
             var tollBooshNo = $("#tollBooshNo2").val();
             var tollCollectorNo = $("#tollCollectorNo2").val();
-            var carType = $("#carType2").combobox('getValue').replace(/\s*/g,"");
+            var carType = $("#carType2").combobox('getValue');
             $("#dg2").datagrid("options").url='ShowAccountFlowServlet';
             var queryParams = $('#dg2').datagrid('options').queryParams;
             if(date.length!=0)

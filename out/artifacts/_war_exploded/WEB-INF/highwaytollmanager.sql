@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 12/10/2019 00:28:21
+ Date: 28/10/2019 23:31:00
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin`  (
-  `adminNo` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `adminNo` int(6) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tollCollectorNo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `userName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `passWord` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('190001', '100001', 'admin', 'admin');
-INSERT INTO `admin` VALUES ('190004', '190001', '1', '1');
+INSERT INTO `admin` VALUES (190001, '100001', 'admin', 'admin');
+INSERT INTO `admin` VALUES (190004, '190001', '1', '1');
 
 -- ----------------------------
 -- Table structure for cardinfo
@@ -52,7 +52,7 @@ CREATE TABLE `cardinfo`  (
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cardinfo
@@ -73,7 +73,7 @@ CREATE TABLE `feerateinfo`  (
   `carType` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fee` float(32, 2) NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of feerateinfo
@@ -92,7 +92,7 @@ CREATE TABLE `laneinfo`  (
   `principal` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `laneName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of laneinfo
@@ -111,7 +111,7 @@ CREATE TABLE `rechargelog`  (
   `tollCollectorNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `rechargeAmount` float(32, 1) NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rechargelog
@@ -194,7 +194,7 @@ CREATE TABLE `totalfee`  (
   `tollBooshNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `laneNo` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of totalfee
@@ -240,7 +240,7 @@ CREATE TABLE `trafficvolume`  (
   `carType` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `numbersOfPass` int(8) NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of trafficvolume
@@ -259,7 +259,7 @@ CREATE TABLE `worklog`  (
   `finishWorkTime` datetime(0) NULL DEFAULT NULL,
   `tollBooshNo` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of worklog
@@ -274,5 +274,7 @@ INSERT INTO `worklog` VALUES (19, '100001', '2019-10-10 17:33:22', '2019-10-10 1
 INSERT INTO `worklog` VALUES (20, '190001', '2019-10-10 17:33:35', '2019-10-10 17:33:37', '100000');
 INSERT INTO `worklog` VALUES (21, '190001', '2019-10-10 17:33:41', '2019-10-10 17:33:43', '100000');
 INSERT INTO `worklog` VALUES (22, '190001', '2019-10-11 20:16:50', '2019-10-11 20:16:52', '100000');
+INSERT INTO `worklog` VALUES (23, '190001', '2019-10-28 23:27:48', '2019-10-28 23:29:54', '100000');
+INSERT INTO `worklog` VALUES (24, '190001', '2019-10-28 23:29:56', '2019-10-28 23:29:58', '100000');
 
 SET FOREIGN_KEY_CHECKS = 1;
